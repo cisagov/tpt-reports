@@ -42,10 +42,10 @@ def get_version(version_file):
 
 
 setup(
-    name="example",
+    name="tptmple",
     # Versions should comply with PEP440
     version=get_version("src/example/_version.py"),
-    description="Example Python library",
+    description="TPTmple Python library",
     long_description=readme(),
     long_description_content_type="text/markdown",
     # Landing page for CISA's cybersecurity mission
@@ -53,8 +53,8 @@ setup(
     # Additional URLs for this project per
     # https://packaging.python.org/guides/distributing-packages-using-setuptools/#project-urls
     project_urls={
-        "Source": "https://github.com/cisagov/rpt-phish-report",
-        "Tracker": "https://github.com/cisagov/rpt-phish-report/issues",
+        "Source": "https://github.com/cisagov/tpt-phish-report",
+        "Tracker": "https://github.com/cisagov/tpt-phish-report/issues",
     },
     # Author details
     author="Cybersecurity and Infrastructure Security Agency",
@@ -108,5 +108,5 @@ setup(
         ]
     },
     # Conveniently allows one to run the CLI tool as `example`
-    entry_points={"console_scripts": ["example = example.example:main"]},
+    entry_points={"console_scripts": ["tptmple = example.etptple:main"]},
 )
