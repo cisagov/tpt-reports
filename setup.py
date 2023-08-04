@@ -1,5 +1,5 @@
 """
-This is the setup module for the example project.
+This is the setup module for the tpt-phish-report project.
 
 Based on:
 
@@ -44,7 +44,7 @@ def get_version(version_file):
 setup(
     name="tptmple",
     # Versions should comply with PEP440
-    version=get_version("src/example/_version.py"),
+    version=get_version("src/tpt-phish-report/_version.py"),
     description="TPTmple Python library",
     long_description=readme(),
     long_description_content_type="text/markdown",
@@ -88,7 +88,7 @@ setup(
     keywords="skeleton",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    package_data={"example": ["data/*.txt"]},
+    package_data={"tpt-phish-report": ["data/*.txt"]},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
     include_package_data=True,
     install_requires=["docopt", "schema", "setuptools >= 24.2.0"],
@@ -107,6 +107,6 @@ setup(
             "pytest",
         ]
     },
-    # Conveniently allows one to run the CLI tool as `example`
-    entry_points={"console_scripts": ["tptmple = example.etptple:main"]},
+    # Conveniently allows one to run the CLI tool as `tpt-phish-report`
+    entry_points={"console_scripts": ["tptmple = tpt-phish-report.etptple:main"]},
 )
