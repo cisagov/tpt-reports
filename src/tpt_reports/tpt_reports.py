@@ -27,7 +27,8 @@ from typing import Any, Dict
 
 # Third-Party Libraries
 import docopt
-import pkg_resources
+
+# import pkg_resources
 from schema import And, Schema, SchemaError, Use
 
 from ._version import __version__
@@ -92,12 +93,14 @@ def main() -> None:
     logging.info('ECHO_MESSAGE="%s"', message)
 
     # Access some data from our package data (see the setup.py)
-    secret_message: str = (
-        pkg_resources.resource_string("tpt_reports", "data/secret.txt")
-        .decode("utf-8")
-        .strip()
-    )
-    logging.info('Secret="%s"', secret_message)
+    # Commenting skeleton base code section because of Clear-text logging
+    # of sensitive information error in CI
+    # secret_message: str = (
+    #     pkg_resources.resource_string("tpt_reports", "data/secret.txt")
+    #     .decode("utf-8")
+    #     .strip()
+    # )
+    # logging.info('Secret="%s"', secret_message)
 
     # Stop logging and clean up
     logging.shutdown()
