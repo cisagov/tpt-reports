@@ -1,4 +1,4 @@
-"""example is an example Python library and tool.
+"""tpt_reports is a report generation Python library and tool.
 
 Divide one integer by another and log the result. Also log some information
 from an environment variable and a package resource.
@@ -32,7 +32,7 @@ from schema import And, Schema, SchemaError, Use
 
 from ._version import __version__
 
-DEFAULT_ECHO_MESSAGE: str = "Hello World from the example default!"
+DEFAULT_ECHO_MESSAGE: str = "Hello World from the tpt_reports default!"
 
 
 def tpt_report_div(dividend: int, divisor: int) -> float:
@@ -46,7 +46,7 @@ def tpt_report_div(dividend: int, divisor: int) -> float:
 
 
 def main() -> None:
-    """Set up logging and call the example function."""
+    """Set up logging and call the tpt_report function."""
     args: Dict[str, str] = docopt.docopt(__doc__, version=__version__)
     # Validate and convert arguments as needed
     schema: Schema = Schema(
@@ -85,7 +85,7 @@ def main() -> None:
         format="%(asctime)-15s %(levelname)s %(message)s", level=log_level.upper()
     )
 
-    logging.info("%d / %d == %f", dividend, divisor, example_div(dividend, divisor))
+    logging.info("%d / %d == %f", dividend, divisor, tpt_report_div(dividend, divisor))
 
     # Access some data from an environment variable
     message: str = os.getenv("ECHO_MESSAGE", DEFAULT_ECHO_MESSAGE)
@@ -93,7 +93,7 @@ def main() -> None:
 
     # Access some data from our package data (see the setup.py)
     secret_message: str = (
-        pkg_resources.resource_string("example", "data/secret.txt")
+        pkg_resources.resource_string("tpt_reports", "data/secret.txt")
         .decode("utf-8")
         .strip()
     )
