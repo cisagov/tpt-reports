@@ -93,14 +93,6 @@ def main() -> None:
     logging.info('ECHO_MESSAGE="%s"', message)
 
     # Access some data from our package data (see the setup.py)
-    # Commenting skeleton base code section because of Clear-text logging
-    # of sensitive information error in CI
-    # secret_message: str = (
-    #     pkg_resources.resource_string("tpt_reports", "data/secret.txt")
-    #     .decode("utf-8")
-    #     .strip()
-    # )
-    # logging.info('Secret="%s"', secret_message)
 
     # Stop logging and clean up
     logging.shutdown()
