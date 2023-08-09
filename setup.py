@@ -42,10 +42,10 @@ def get_version(version_file):
 
 
 setup(
-    name="tptmple",
+    name="tpt_reports",
     # Versions should comply with PEP440
     version=get_version("src/tpt_reports/_version.py"),
-    description="TPTmple Python library",
+    description="tpt_reports Python library",
     long_description=readme(),
     long_description_content_type="text/markdown",
     # Landing page for CISA's cybersecurity mission
@@ -108,5 +108,5 @@ setup(
         ]
     },
     # Conveniently allows one to run the CLI tool as `tpt_reports`
-    entry_points={"console_scripts": ["tptmple = tpt_reports.etptple:main"]},
+    entry_points={"console_scripts": ["tpt_reports = tpt_reports.tpt_reports:main"]},
 )
