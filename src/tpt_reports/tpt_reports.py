@@ -9,8 +9,8 @@ EXIT STATUS
     >0  An error occurred.
 
 Usage:
-  example [--log-level=LEVEL] <dividend> <divisor>
-  example (-h | --help)
+  tpt_reports [--log-level=LEVEL] <dividend> <divisor>
+  tpt_reports (-h | --help)
 
 Options:
   -h --help              Show this message.
