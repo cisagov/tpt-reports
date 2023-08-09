@@ -53,8 +53,8 @@ setup(
     # Additional URLs for this project per
     # https://packaging.python.org/guides/distributing-packages-using-setuptools/#project-urls
     project_urls={
-        "Source": "https://github.com/cisagov/tpt-phish-report",
-        "Tracker": "https://github.com/cisagov/tpt-phish-report/issues",
+        "Source": "https://github.com/cisagov/tpt-reports",
+        "Tracker": "https://github.com/cisagov/tpt-reports/issues",
     },
     # Author details
     author="Cybersecurity and Infrastructure Security Agency",

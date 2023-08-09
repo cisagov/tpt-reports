@@ -1,9 +1,9 @@
-# tpt-phish-report #
+# tpt-reports #
 
-[![GitHub Build Status](https://github.com/cisagov/tpt-phish-report/workflows/build/badge.svg)](https://github.com/cisagov/tpt-phish-report/actions)
-[![CodeQL](https://github.com/cisagov/tpt-phish-report/workflows/CodeQL/badge.svg)](https://github.com/cisagov/tpt-phish-report/actions/workflows/codeql-analysis.yml)
-[![Coverage Status](https://coveralls.io/repos/github/cisagov/tpt-phish-report/badge.svg?branch=develop)](https://coveralls.io/github/cisagov/tpt-phish-report?branch=develop)
-[![Known Vulnerabilities](https://snyk.io/test/github/cisagov/tpt-phish-report/develop/badge.svg)](https://snyk.io/test/github/cisagov/tpt-phish-report)
+[![GitHub Build Status](https://github.com/cisagov/tpt-reports/workflows/build/badge.svg)](https://github.com/cisagov/tpt-reports/actions)
+[![CodeQL](https://github.com/cisagov/tpt-reports/workflows/CodeQL/badge.svg)](https://github.com/cisagov/tpt-reports/actions/workflows/codeql-analysis.yml)
+[![Coverage Status](https://coveralls.io/repos/github/cisagov/tpt-reports/badge.svg?branch=develop)](https://coveralls.io/github/cisagov/tpt-reports?branch=develop)
+[![Known Vulnerabilities](https://snyk.io/test/github/cisagov/tpt-reports/develop/badge.svg)](https://snyk.io/test/github/cisagov/tpt-reports)
 
 This is a generic skeleton project that can be used to quickly get a
 new [cisagov](https://github.com/cisagov) Python library GitHub
