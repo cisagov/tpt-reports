@@ -1,24 +1,38 @@
-# tpt-reports #
+# Technical Payload Test Reports (TPT Reports) #
 
 [![GitHub Build Status](https://github.com/cisagov/tpt-reports/workflows/build/badge.svg)](https://github.com/cisagov/tpt-reports/actions)
 [![CodeQL](https://github.com/cisagov/tpt-reports/workflows/CodeQL/badge.svg)](https://github.com/cisagov/tpt-reports/actions/workflows/codeql-analysis.yml)
 [![Coverage Status](https://coveralls.io/repos/github/cisagov/tpt-reports/badge.svg?branch=develop)](https://coveralls.io/github/cisagov/tpt-reports?branch=develop)
 [![Known Vulnerabilities](https://snyk.io/test/github/cisagov/tpt-reports/develop/badge.svg)](https://snyk.io/test/github/cisagov/tpt-reports)
 
-This is a generic skeleton project that can be used to quickly get a
-new [cisagov](https://github.com/cisagov) Python library GitHub
-project started.  This skeleton project contains [licensing
-information](LICENSE), as well as
-[pre-commit hooks](https://pre-commit.com) and
-[GitHub Actions](https://github.com/features/actions) configurations
-appropriate for a Python library project.
+This package is used to generate and deliver CISA Technical Payload Test (TPT) Reports. Reports are delivered locally and include an encrypted PDF attachment. The package collects raw data and creates an encrypted PDF.
 
-## New Repositories from a Skeleton ##
+## Requirements ##
 
-Please see our [Project Setup guide](https://github.com/cisagov/development-guide/tree/develop/project_setup)
-for step-by-step instructions on how to start a new repository from
-a skeleton. This will save you time and effort when configuring a
-new repository!
+- [Python Environment](CONTRIBUTING.md#creating-the-python-virtual-environment)
+
+## Installation ##
+
+- `git clone https://github.com/cisagov/tpt-phish-report.git`
+- `./setup-env`
+
+```console
+Usage:
+  tpt_phish_report_tool.py SERVICENOW_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH OUTPUT_DIRECTORY [--log-level=LEVEL]
+
+Options:
+  -h --help                         Show this message.
+  SERVICENOW_ID                     The ID number in Service Now
+  ELECTION_NAME                     The name of the election being reported on. 
+  DOMAIN_TESTED                     The email domain used in the testing.
+  JSON_FILE_PATH                    Path to the JSON file to act as a data source.
+  REPORT_DATE                       Date of the report, format YYYY-MM-DD
+  OUTPUT_DIRECTORY                  The directory where the final PDF
+                                    reports should be saved.
+  -l --log-level=LEVEL              If specified, then the log level will be set to
+                                    the specified value.  Valid values are "debug", "info",
+                                    "warning", "error", and "critical". [default: info]
+```
 
 ## Contributing ##
 
