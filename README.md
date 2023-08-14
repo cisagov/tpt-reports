@@ -15,7 +15,7 @@ The package collects raw data and creates an encrypted PDF.
 
 ## Installation ##
 
-- `git clone https://github.com/cisagov/tpt-phish-report.git`
+- `git clone https://github.com/cisagov/tpt-reports.git`
 - `./setup-env`
 
 ```console
