@@ -108,5 +108,5 @@ setup(
         ]
     },
     # Conveniently allows one to run the CLI tool as `tpt_reports`
-    entry_points={"console_scripts": ["tpt_reports = tpt_reports.tpt_reports:main"]},
+    entry_points={"console_scripts": ["tpt-reports = tpt_reports.tpt_reports:main"]},
 )
