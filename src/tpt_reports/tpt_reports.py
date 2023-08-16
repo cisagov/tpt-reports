@@ -53,7 +53,7 @@ def get_json_file(phish_result_json):
 
 def main():
     """Generate PDF reports."""
-    args: Dict[str, str] = docopt.docopt(__doc__)
+    args: Dict[str, str] = docopt.docopt(__doc__, version=__version__)
     # Validate and convert arguments as needed
     schema: Schema = Schema(
         {
