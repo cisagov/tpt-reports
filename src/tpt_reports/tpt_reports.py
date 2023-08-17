@@ -1,11 +1,10 @@
 """tpt_reports is a report generation Python library and tool.
 
 Usage:
-  tpt-reports SERVICENOW_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH OUTPUT_DIRECTORY [--log-level=LEVEL]
+  tpt-reports [--log-level=LEVEL]
 
 Options:
   -h --help                         Show this message.
-  JSON_FILE_PATH                    Path to the JSON file to act as a data source.
   -l --log-level=LEVEL              If specified, then the log level will be set to
                                     the specified value.  Valid values are "debug", "info",
                                     "warning", "error", and "critical". [default: info]
@@ -21,16 +20,9 @@ from typing import Any, Dict
 
 # Third-Party Libraries
 import docopt
-
-# import pandas as pd
 from schema import And, Schema, SchemaError, Use
 
 from ._version import __version__
-
-# from xhtml2pdf import pisa
-
-
-# from reportlab_generator import report_gen
 
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.StreamHandler())
@@ -51,7 +43,7 @@ def get_json_file(phish_result_json):
         LOGGER.error("Failure to open JSON file: %s", str(error))
 
 
-def main():
+def main() -> None:
     """Generate PDF reports."""
     args: Dict[str, str] = docopt.docopt(__doc__, version=__version__)
     # Validate and convert arguments as needed
@@ -64,7 +56,8 @@ def main():
                 error="Possible values for --log-level are "
                 + "debug, info, warning, error, and critical.",
             ),
-            str: object,  # Don't care about other keys, if any
+            # "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be an string."),
+            # str: object,  # Don't care about other keys, if any
         }
     )
 
@@ -77,27 +70,22 @@ def main():
 
     # Assign validated arguments to variables
     log_level: str = validated_args["--log-level"]
+    # json_file_path: str = validated_args["JSON_FILE_PATH"]
 
-    # Setup logging to central file
+    # get_json_file(json_file_path)
+
+    # Set up logging
     logging.basicConfig(
-        filename=LOGGING_FILE,
-        filemode="a",
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        datefmt="%m/%d/%Y %I:%M:%S",
-        level=log_level.upper(),
+        format="%(asctime)-15s %(levelname)s %(message)s", level=log_level.upper()
     )
 
     LOGGER.info("Loading TPT Phish Report, Version : %s", __version__)
 
-    LOGGER.info("JSON file path: %s", validated_args["JSON_FILE_PATH"])
-    success = get_json_file(validated_args["JSON_FILE_PATH"])
+    # LOGGER.info("JSON file path: %s", validated_args["JSON_FILE_PATH"])
+    # success = get_json_file(validated_args["JSON_FILE_PATH"])
 
-    if success:
-        LOGGER.info("JSON FILE loaded successfully.")
+    # if success:
+    #     LOGGER.info("JSON FILE loaded successfully.")
 
     # Stop logging and clean up
     logging.shutdown()
-
-
-if __name__ == "__main__":
-    main()
