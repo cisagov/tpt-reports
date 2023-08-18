@@ -1,13 +1,14 @@
 """tpt_reports is a report generation Python library and tool.
 
 Usage:
-  tpt-reports [--log-level=LEVEL]
+  tpt-reports [--log-level=LEVEL] [JSON_FILE_PATH]
 
 Options:
   -h --help                         Show this message.
   -l --log-level=LEVEL              If specified, then the log level will be set to
                                     the specified value.  Valid values are "debug", "info",
                                     "warning", "error", and "critical". [default: info]
+  JSON_FILE_PATH                    Path to the JSON file to act as a data source.
 """
 
 # Standard Python Libraries
@@ -31,16 +32,16 @@ LOGGING_FILE = "phish_report_generator.log"
 
 # Issue #6 - Create Unit Tests
 # TODO: Add unit tests for following logic and remove this comment.
-def get_json_file(phish_result_json):
+def get_json_file(file_path):
     """Open JSON file and load data."""
     try:
-        json_file = open(phish_result_json)
-        LOGGER.info("Loading JSON data from %s", phish_result_json)
-        data = json.load(json_file)
-        json_file.close()
-        return data
-    except Exception as error:
+        with open(file_path, encoding="utf-8") as file:
+            LOGGER.debug("Loading JSON data from %s", file_path)
+            data = json.load(file)
+            return data
+    except FileNotFoundError as error:
         LOGGER.error("Failure to open JSON file: %s", str(error))
+        return None
 
 
 def main() -> None:
@@ -56,8 +57,7 @@ def main() -> None:
                 error="Possible values for --log-level are "
                 + "debug, info, warning, error, and critical.",
             ),
-            # "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be an string."),
-            # str: object,  # Don't care about other keys, if any
+            "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be an string."),
         }
     )
 
@@ -70,22 +70,17 @@ def main() -> None:
 
     # Assign validated arguments to variables
     log_level: str = validated_args["--log-level"]
-    # json_file_path: str = validated_args["JSON_FILE_PATH"]
-
-    # get_json_file(json_file_path)
+    json_file_path: str = validated_args["JSON_FILE_PATH"]
 
     # Set up logging
     logging.basicConfig(
         format="%(asctime)-15s %(levelname)s %(message)s", level=log_level.upper()
     )
 
-    LOGGER.info("Loading TPT Phish Report, Version : %s", __version__)
+    success = get_json_file(json_file_path)
 
-    # LOGGER.info("JSON file path: %s", validated_args["JSON_FILE_PATH"])
-    # success = get_json_file(validated_args["JSON_FILE_PATH"])
-
-    # if success:
-    #     LOGGER.info("JSON FILE loaded successfully.")
+    if success:
+        LOGGER.info("JSON FILE loaded successfully.")
 
     # Stop logging and clean up
     logging.shutdown()

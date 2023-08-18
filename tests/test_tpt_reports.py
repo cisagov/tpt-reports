@@ -67,7 +67,7 @@ def test_release_version():
 @pytest.mark.parametrize("level", log_levels)
 def test_log_levels(level):
     """Validate commandline log-level arguments."""
-    with patch.object(sys, "argv", ["bogus", f"--log-level={level}"]):
+    with patch.object(sys, "argv", ["bogus", f"--log-level={level}"], "test"):
         with patch.object(logging.root, "handlers", []):
             assert (
                 logging.root.hasHandlers() is False
