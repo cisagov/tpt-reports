@@ -20,20 +20,14 @@ The package collects raw data and creates an encrypted PDF.
 
 ```console
 Usage:
-  tpt_phish_report_tool.py SERVICENOW_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH OUTPUT_DIRECTORY [--log-level=LEVEL]
+  tpt-reports [--log-level=LEVEL] [JSON_FILE_PATH]
 
 Options:
   -h --help                         Show this message.
-  SERVICENOW_ID                     The ID number in Service Now
-  ELECTION_NAME                     The name of the election being reported on.
-  DOMAIN_TESTED                     The email domain used in the testing.
-  JSON_FILE_PATH                    Path to the JSON file to act as a data source.
-  REPORT_DATE                       Date of the report, format YYYY-MM-DD
-  OUTPUT_DIRECTORY                  The directory where the final PDF
-                                    reports should be saved.
   -l --log-level=LEVEL              If specified, then the log level will be set to
                                     the specified value.  Valid values are "debug", "info",
                                     "warning", "error", and "critical". [default: info]
+  JSON_FILE_PATH                    Path to the JSON file to act as a data source.
 ```
 
 ## Contributing ##
