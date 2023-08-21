@@ -107,6 +107,6 @@ setup(
             "pytest",
         ]
     },
-    # Conveniently allows one to run the CLI tool as `tpt_reports`
+    # Conveniently allows one to run the CLI tool as `tpt-reports`
     entry_points={"console_scripts": ["tpt-reports = tpt_reports.tpt_reports:main"]},
 )
