@@ -1,5 +1,5 @@
 """
-This is the setup module for the tpt_reports project.
+This is the setup module for the tpt-reports project.
 
 Based on:
 
