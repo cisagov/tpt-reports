@@ -1,5 +1,5 @@
 #!/usr/bin/env pytest -vs
-"""Tests for tpt_reports."""
+"""Tests for tpt-reports."""
 
 # Standard Python Libraries
 import logging
