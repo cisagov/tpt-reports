@@ -4,6 +4,6 @@
 # package_name.__version__, which is used to get version information about this
 # Python package.
 from ._version import __version__  # noqa: F401
-from .tpt_reports import get_json_file
+from .tpt_reports import load_json_file
 
-__all__ = ["get_json_file"]
+__all__ = ["load_json_file"]

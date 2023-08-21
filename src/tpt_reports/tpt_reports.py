@@ -33,7 +33,7 @@ LOGGING_FILE = "phish_report_generator.log"
 
 # Issue #6 - Create Unit Tests
 # TODO: Add unit tests for following logic and remove this comment.
-def get_json_file(file_path):
+def load_json_file(file_path):
     """Open JSON file and load data."""
     try:
         with open(file_path, encoding="utf-8") as file:
@@ -43,6 +43,8 @@ def get_json_file(file_path):
     except FileNotFoundError as error:
         LOGGER.error("Failure to open JSON file: %s", str(error))
         return None
+
+
 # Issue #4 - Add ReportLab code and library
 # TODO: Add in the ReportLab code, library, parsing logic and remove this comment.
 def main() -> None:
@@ -78,9 +80,7 @@ def main() -> None:
         format="%(asctime)-15s %(levelname)s %(message)s", level=log_level.upper()
     )
 
-    success = get_json_file(json_file_path)
-
-    if success:
+    if load_json_file(json_file_path):
         LOGGER.info("JSON FILE loaded successfully.")
 
     # Stop logging and clean up
