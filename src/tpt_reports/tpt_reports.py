@@ -43,10 +43,10 @@ def get_json_file(file_path):
     except FileNotFoundError as error:
         LOGGER.error("Failure to open JSON file: %s", str(error))
         return None
-
-
+# Issue #4 - Add ReportLab code and library
+# TODO: Add in the ReportLab code, library, parsing logic and remove this comment.
 def main() -> None:
-    """Generate PDF reports."""
+    """Load JSON File from supplied argument."""
     args: Dict[str, str] = docopt.docopt(__doc__, version=__version__)
     # Validate and convert arguments as needed
     schema: Schema = Schema(
