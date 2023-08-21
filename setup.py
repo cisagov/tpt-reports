@@ -1,5 +1,5 @@
 """
-This is the setup module for the example project.
+This is the setup module for the tpt-reports project.
 
 Based on:
 
@@ -42,10 +42,10 @@ def get_version(version_file):
 
 
 setup(
-    name="tptmple",
+    name="tpt_reports",
     # Versions should comply with PEP440
-    version=get_version("src/example/_version.py"),
-    description="TPTmple Python library",
+    version=get_version("src/tpt_reports/_version.py"),
+    description="tpt_reports Python library",
     long_description=readme(),
     long_description_content_type="text/markdown",
     # Landing page for CISA's cybersecurity mission
@@ -53,8 +53,8 @@ setup(
     # Additional URLs for this project per
     # https://packaging.python.org/guides/distributing-packages-using-setuptools/#project-urls
     project_urls={
-        "Source": "https://github.com/cisagov/tpt-phish-report",
-        "Tracker": "https://github.com/cisagov/tpt-phish-report/issues",
+        "Source": "https://github.com/cisagov/tpt-reports",
+        "Tracker": "https://github.com/cisagov/tpt-reports/issues",
     },
     # Author details
     author="Cybersecurity and Infrastructure Security Agency",
@@ -88,7 +88,7 @@ setup(
     keywords="skeleton",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    package_data={"example": ["data/*.txt"]},
+    package_data={"tpt_reports": ["data/*.txt"]},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
     include_package_data=True,
     install_requires=["docopt", "schema", "setuptools >= 24.2.0"],
@@ -107,6 +107,6 @@ setup(
             "pytest",
         ]
     },
-    # Conveniently allows one to run the CLI tool as `example`
-    entry_points={"console_scripts": ["tptmple = example.etptple:main"]},
+    # Conveniently allows one to run the CLI tool as `tpt-reports`
+    entry_points={"console_scripts": ["tpt-reports = tpt_reports.tpt_reports:main"]},
 )
