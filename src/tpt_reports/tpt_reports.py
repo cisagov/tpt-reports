@@ -28,7 +28,7 @@ from ._version import __version__
 
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.StreamHandler())
-LOGGING_FILE = "phish_report_generator.log"
+LOGGING_FILE = "report_generator.log"
 
 
 # Issue #6 - Create Unit Tests
