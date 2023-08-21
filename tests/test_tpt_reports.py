@@ -16,7 +16,7 @@ import tpt_reports
 log_levels = (
     "debug",
     "info",
-    # "warning",
+    "warning",
     "error",
     "critical",
 )
