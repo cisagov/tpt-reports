@@ -1,7 +1,7 @@
 """tpt_reports is a report generation Python library and tool.
 
 Usage:
-  tpt-reports [--log-level=LEVEL] [JSON_FILE_PATH]
+  tpt-reports [--log-level=LEVEL] JSON_FILE_PATH
 
 Options:
   -h --help                         Show this message.
