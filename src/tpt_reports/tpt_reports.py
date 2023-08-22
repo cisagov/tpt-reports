@@ -13,6 +13,7 @@ Arguments:
 """
 
 # Standard Python Libraries
+from datetime import date
 import json
 import logging
 
@@ -25,6 +26,7 @@ import docopt
 from schema import And, Schema, SchemaError, Use
 
 from ._version import __version__
+from .report_generator import report_gen
 
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.StreamHandler())
