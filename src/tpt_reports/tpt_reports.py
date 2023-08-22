@@ -47,6 +47,8 @@ def load_json_file(file_path):
         return None
 
 
+# Issue #6 - Add Functional/Unit tests
+# TODO: Add test cases for parse_json() and remove this comment.
 def parse_json(data):
     """Parse JSON object for values to report."""
     payloads_list = []
@@ -100,6 +102,8 @@ def parse_json(data):
     return payloads_meta, payloads_list
 
 
+# Issue #6 - Add Functional/Unit tests
+# TODO: Add test cases for generate_reports() and remove this comment.
 def generate_reports(
     servicenow_id, election_name, domain_tested, output_directory, json_file_path
 ):
