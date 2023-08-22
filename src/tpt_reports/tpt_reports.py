@@ -45,6 +45,79 @@ def load_json_file(file_path):
         return None
 
 
+def parse_json(data):
+    """Parse JSON object for values to report."""
+    payloads_list = []
+    payloads_meta = {}
+    num_payloads = 0
+    host_blocked = 0
+    host_not_blocked = 0
+    border_blocked = 0
+    border_not_blocked = 0
+    try:
+        if data:
+            for payload in data["payloads"]:
+                num_payloads += 1
+                payload_data = {}
+                payload_data["Payload"] = payload["payload_description"]
+                payload_data["C2 Protocol"] = payload["c2_protocol "]
+
+                if payload["border_protection"] == "N":
+                    payload_data["Border Protection"] = "Not Blocked"
+                    border_not_blocked += 1
+                elif payload["border_protection"] == "B":
+                    payload_data["Border Protection"] = "Blocked"
+                    border_blocked += 1
+                else:
+                    raise ValueError("border_protection value must be either B or N")
+
+                if payload["host_protection"] == "N":
+                    payload_data["Host Protection"] = "Not Blocked"
+                    host_not_blocked += 1
+                elif payload["host_protection"] == "B":
+                    payload_data["Host Protection"] = "Blocked"
+                    host_blocked += 1
+                else:
+                    raise ValueError("host_protection value must be either B or N")
+
+                payloads_list.append(payload_data)
+
+        payloads_meta["num_payloads"] = num_payloads
+        payloads_meta["host_blocked"] = host_blocked
+        payloads_meta["host_not_blocked"] = host_not_blocked
+        payloads_meta["border_blocked"] = border_blocked
+        payloads_meta["border_not_blocked"] = border_not_blocked
+        payloads_meta["num_blocked"] = num_payloads
+        payloads_not_blocked = border_not_blocked + host_not_blocked
+        payloads_meta["payloads_not_blocked"] = payloads_not_blocked
+        payloads_blocked = border_blocked + host_blocked
+        payloads_meta["payloads_blocked"] = payloads_blocked
+
+    except Exception as e:
+        LOGGER.exception(str(e))
+    return payloads_meta, payloads_list
+
+
+def generate_reports(
+    servicenow_id, election_name, domain_tested, output_directory, json_file_path
+):
+    """Process steps for generating report data."""
+    tpt_info = {}
+    tpt_info["servicenow_id"] = servicenow_id
+    tpt_info["election_name"] = election_name
+    tpt_info["report_date"] = date.today().strftime("%Y-%m-%d")
+    tpt_info["domain_tested"] = domain_tested
+    tpt_info["output_directory"] = output_directory
+    data = get_json_file(json_file_path)
+    if data:
+        payloads_meta, payloads_list = parse_json(data)
+        tpt_info["payloads_meta"] = payloads_meta
+        logging.debug(tpt_info)
+        logging.debug(payloads_list)
+        report_gen(tpt_info, payloads_list)
+    return True
+
+
 # Issue #4 - Add ReportLab code and library
 # TODO: Add in the ReportLab code, library, parsing logic and remove this comment.
 def main() -> None:
