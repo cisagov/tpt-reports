@@ -108,7 +108,7 @@ def generate_reports(
     tpt_info["report_date"] = date.today().strftime("%Y-%m-%d")
     tpt_info["domain_tested"] = domain_tested
     tpt_info["output_directory"] = output_directory
-    data = get_json_file(json_file_path)
+    data = load_json_file(json_file_path)
     if data:
         payloads_meta, payloads_list = parse_json(data)
         tpt_info["payloads_meta"] = payloads_meta
