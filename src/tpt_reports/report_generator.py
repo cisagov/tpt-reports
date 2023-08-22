@@ -53,6 +53,7 @@ PAGE_WIDTH = defaultPageSize[0]
 
 
 def generate_password(length):
+    """Generate a string for the password for the pdf."""
     # Generate a random string of hexadecimal digits
     password = secrets.token_hex(length // 2)
 
