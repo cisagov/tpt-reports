@@ -15,7 +15,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import (  # HRFlowable,; ListFlowable,; ListItem,
+from reportlab.platypus import (
     Image,
     KeepTogether,
     PageBreak,
@@ -34,7 +34,7 @@ from reportlab.platypus.frames import Frame
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
-# Set fonts that you will use in the pdf.
+# Set fonts to be used in the pdf
 pdfmetrics.registerFont(
     TTFont("Franklin_Gothic_Book", BASE_DIR + "/fonts/FranklinGothicBook.ttf")
 )
