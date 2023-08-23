@@ -88,7 +88,7 @@ setup(
     keywords="skeleton",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    package_data={"tpt_reports": ["data/*.txt", "fonts/*.ttf"]},
+    package_data={"tpt_reports": ["fonts/*.ttf"]},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
     include_package_data=True,
     install_requires=[
