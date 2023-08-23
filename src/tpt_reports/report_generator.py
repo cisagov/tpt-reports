@@ -261,13 +261,6 @@ def report_gen(tpt_info, payloads_list):
         spaceBefore=10,
         textColor=HexColor("#003e67"),
     )
-    # h1 = paragraph_style(
-    #     fontName="Franklin_Gothic_Medium_Regular",
-    #     name="Heading1",
-    #     fontSize=16,
-    #     leading=18,
-    #     textColor=HexColor("#003e67"),
-    # )
     h2 = paragraph_style(
         name="Heading2",
         fontName="Franklin_Gothic_Medium_Regular",
@@ -276,14 +269,6 @@ def report_gen(tpt_info, payloads_list):
         textColor=HexColor("#003e67"),
         spaceAfter=12,
     )
-    # h3 = paragraph_style(
-    #     name="Heading3",
-    #     fontName="Franklin_Gothic_Medium_Regular",
-    #     fontSize=14,
-    #     leading=10,
-    #     textColor=HexColor("#003e67"),
-    #     spaceAfter=10,
-    # )
     body = paragraph_style(
         name="body",
         leading=14,
@@ -310,17 +295,6 @@ def report_gen(tpt_info, payloads_list):
     # Create dynamic content; repeated and random elements used in the report
     point12_spacer = ConditionalSpacer(1, 12)
     point24_spacer = ConditionalSpacer(1, 24)
-    # horizontal_line = HRFlowable(
-    #     width="100%",
-    #     thickness=1.5,
-    #     lineCap="round",
-    #     color=HexColor("#003e67"),
-    #     spaceBefore=0,
-    #     spaceAfter=1,
-    #     hAlign="LEFT",
-    #     vAlign="TOP",
-    #     dash=None,
-    # )
 
     # Appends sequentially with the frames created above i.e. title_page then content_page
     Story.append(get_image(BASE_DIR + "/assets/TitlePage.png", width=9 * inch))
@@ -415,6 +389,7 @@ def report_gen(tpt_info, payloads_list):
         )
     )
     Story.append(PageBreak())
+
     # Generate a table using a tabframe passed to my format_table function
     Story.append(
         format_table(
@@ -440,57 +415,3 @@ def report_gen(tpt_info, payloads_list):
     doc.multiBuild(Story)
     print("REPORT KEY: " + os.environ.get("TPT_REPORT_KEY"))
     return doc
-
-
-# Temporary list data
-tpt_info = {
-    "servicenow_id": "ServiceNow ID",
-    "election_name": "Stakeholder Name",
-    "report_date": "yyyy-mm-dd",
-    "domain_tested": "Email Domain",
-    "output_directory": "testrun.pdf",
-    "payloads_meta": {
-        "num_payloads": 0,
-        "host_blocked": 0,
-        "host_not_blocked": 0,
-        "border_blocked": 0,
-        "border_not_blocked": 0,
-        "num_blocked": 0,
-        "payloads_not_blocked": 0,
-        "payloads_blocked": 0,
-    },
-    "reference_table": {
-        "Security Reference (FCRM, NIST, ETC.)": [
-            "NIST ### - ## - Revision # - The subject matter listed"
-        ],
-        "Date": ["yyyy-mm-dd"],
-    },
-}
-payloads_list = [
-    {
-        "Payload": "This is a test payload description that wraps to the next line",
-        "C2 Protocol": "TEST",
-        "Border Protection": "Blocked",
-        "Host Protection": "Blocked",
-    },
-    {
-        "Payload": "This is a test payload description that wraps to the next line",
-        "C2 Protocol": "TEST",
-        "Border Protection": "Not Blocked",
-        "Host Protection": "Not Blocked",
-    },
-    {
-        "Payload": "This is a test payload description",
-        "C2 Protocol": "TEST",
-        "Border Protection": "Blocked",
-        "Host Protection": "Not Blocked",
-    },
-    {
-        "Payload": "This is a test payload description",
-        "C2 Protocol": "TEST",
-        "Border Protection": "Not Blocked",
-        "Host Protection": "Blocked",
-    },
-]
-
-# report_gen(tpt_info, payloads_list)
