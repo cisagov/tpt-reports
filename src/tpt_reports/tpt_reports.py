@@ -176,6 +176,12 @@ def main() -> None:
         format="%(asctime)-15s %(levelname)s %(message)s", level=log_level.upper()
     )
 
+    LOGGER.info("Loading TPT-Reports, Version : %s", __version__)
+
+    # Create output directory
+    if not os.path.exists(validated_args["OUTPUT_DIRECTORY"]):
+        os.mkdir(validated_args["OUTPUT_DIRECTORY"])
+        
     if generate_reports(servicenow_id, election_name, domain_tested, output_directory, json_file_path):
         LOGGER.info("Report generated successfully.")
 
