@@ -1,7 +1,7 @@
-"""tpt_reports is a report generation Python library and tool.
+"""cisagov/tpt-reports: A tool for creating phishing reports to support TPT.
 
 Usage:
-  tpt-reports [--log-level=LEVEL] JSON_FILE_PATH
+  tpt_reports SERVICENOW_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH OUTPUT_DIRECTORY [--log-level=LEVEL]
 
 Options:
   -h --help                         Show this message.
@@ -9,15 +9,22 @@ Options:
                                     the specified value.  Valid values are "debug", "info",
                                     "warning", "error", and "critical". [default: info]
 Arguments:
+  SERVICENOW_ID                     The ID number in Service Now
+  ELECTION_NAME                     The name of the election being reported on. 
+  DOMAIN_TESTED                     The email domain used in the testing.
   JSON_FILE_PATH                    Path to the JSON file to act as a data source.
+  OUTPUT_DIRECTORY                  The directory where the final PDF
+                                    reports should be saved.
+
 """
+
 
 # Standard Python Libraries
 from datetime import date
 import json
 import logging
 
-# import os
+import os
 import sys
 from typing import Any, Dict
 
@@ -111,7 +118,6 @@ def generate_reports(
     tpt_info = {}
     tpt_info["servicenow_id"] = servicenow_id
     tpt_info["election_name"] = election_name
-    tpt_info["report_date"] = date.today().strftime("%Y-%m-%d")
     tpt_info["domain_tested"] = domain_tested
     tpt_info["output_directory"] = output_directory
     data = load_json_file(json_file_path)
@@ -121,7 +127,9 @@ def generate_reports(
         logging.debug(tpt_info)
         logging.debug(payloads_list)
         report_gen(tpt_info, payloads_list)
-    return True
+        return True
+    else:
+        return False
 
 
 # Issue #4 - Add ReportLab code and library
@@ -139,7 +147,12 @@ def main() -> None:
                 error="Possible values for --log-level are "
                 + "debug, info, warning, error, and critical.",
             ),
+            "SERVICENOW_ID": Use(str, error="SERVICENOW_ID must be a string."),
+            "ELECTION_NAME": Use(str, error="ELECTION_NAME must be a string."),
+            "DOMAIN_TESTED": Use(str, error="DOMAIN_TESTED must be a string."),
             "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be an string."),
+            "OUTPUT_DIRECTORY": Use(str,error="OUTPUT_DIRECTORY must exist.")
+
         }
     )
 
@@ -152,6 +165,10 @@ def main() -> None:
 
     # Assign validated arguments to variables
     log_level: str = validated_args["--log-level"]
+    servicenow_id: str = validated_args["SERVICENOW_ID"]
+    election_name: str = validated_args["ELECTION_NAME"]
+    domain_tested: str = validated_args["DOMAIN_TESTED"]
+    output_directory: str = validated_args["OUTPUT_DIRECTORY"]
     json_file_path: str = validated_args["JSON_FILE_PATH"]
 
     # Set up logging
@@ -159,8 +176,10 @@ def main() -> None:
         format="%(asctime)-15s %(levelname)s %(message)s", level=log_level.upper()
     )
 
-    if load_json_file(json_file_path):
-        LOGGER.info("JSON FILE loaded successfully.")
+    if generate_reports(servicenow_id, election_name, domain_tested, output_directory, json_file_path):
+        LOGGER.info("Report generated successfully.")
 
     # Stop logging and clean up
     logging.shutdown()
+
+    return True

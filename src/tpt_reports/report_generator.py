@@ -313,11 +313,7 @@ def report_gen(tpt_info, payloads_list):
         format_table(
             pd.DataFrame.from_dict(
                 {
-                    "Report Date": [
-                        datetime.strptime(tpt_info["report_date"], "%Y-%m-%d").strftime(
-                            "%m/%d/%Y"
-                        )
-                    ],
+                    "Report Date": [tpt_info.get("report_date", datetime.now())],
                     "Stakeholder Name": [tpt_info["election_name"]],
                     "Domain Tested": [tpt_info["domain_tested"]],
                     "Assessment ID": [tpt_info["servicenow_id"]],
