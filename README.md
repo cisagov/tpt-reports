@@ -20,7 +20,7 @@ The package collects raw data and creates an encrypted PDF.
 
 ```console
 Usage:
-  tpt-reports [--log-level=LEVEL] JSON_FILE_PATH
+  tpt_reports SERVICENOW_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH OUTPUT_DIRECTORY [--log-level=LEVEL]
 
 Options:
   -h --help                         Show this message.
@@ -28,7 +28,12 @@ Options:
                                     the specified value.  Valid values are "debug", "info",
                                     "warning", "error", and "critical". [default: info]
 Arguments:
+  SERVICENOW_ID                     The ID number in Service Now
+  ELECTION_NAME                     The name of the election being reported on.
+  DOMAIN_TESTED                     The email domain used in the testing.
   JSON_FILE_PATH                    Path to the JSON file to act as a data source.
+  OUTPUT_DIRECTORY                  The directory where the final PDF
+                                    reports should be saved.
 ```
 
 ## Contributing ##
