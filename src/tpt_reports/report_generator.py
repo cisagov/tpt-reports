@@ -32,7 +32,7 @@ from reportlab.platypus.doctemplate import (
 from reportlab.platypus.frames import Frame
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-TODAYS_DATE = datetime.today().strftime('%m/%d/%Y')
+TODAYS_DATE = datetime.today().strftime("%m/%d/%Y")
 
 # Set fonts to be used in the pdf
 pdfmetrics.registerFont(

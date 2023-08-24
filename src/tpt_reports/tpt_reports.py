@@ -10,7 +10,7 @@ Options:
                                     "warning", "error", and "critical". [default: info]
 Arguments:
   SERVICENOW_ID                     The ID number in Service Now
-  ELECTION_NAME                     The name of the election being reported on. 
+  ELECTION_NAME                     The name of the election being reported on.
   DOMAIN_TESTED                     The email domain used in the testing.
   JSON_FILE_PATH                    Path to the JSON file to act as a data source.
   OUTPUT_DIRECTORY                  The directory where the final PDF
@@ -20,11 +20,8 @@ Arguments:
 
 
 # Standard Python Libraries
-from datetime import date
 import json
 import logging
-
-import os
 import sys
 from typing import Any, Dict
 
@@ -151,8 +148,7 @@ def main() -> None:
             "ELECTION_NAME": Use(str, error="ELECTION_NAME must be a string."),
             "DOMAIN_TESTED": Use(str, error="DOMAIN_TESTED must be a string."),
             "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be an string."),
-            "OUTPUT_DIRECTORY": Use(str,error="OUTPUT_DIRECTORY must exist.")
-
+            "OUTPUT_DIRECTORY": Use(str, error="OUTPUT_DIRECTORY must exist."),
         }
     )
 
@@ -176,10 +172,10 @@ def main() -> None:
         format="%(asctime)-15s %(levelname)s %(message)s", level=log_level.upper()
     )
 
-    if generate_reports(servicenow_id, election_name, domain_tested, output_directory, json_file_path):
+    if generate_reports(
+        servicenow_id, election_name, domain_tested, output_directory, json_file_path
+    ):
         LOGGER.info("Report generated successfully.")
 
     # Stop logging and clean up
     logging.shutdown()
-
-    return True
