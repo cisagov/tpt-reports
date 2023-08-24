@@ -52,6 +52,8 @@ PAGE_HEIGHT = defaultPageSize[1]
 PAGE_WIDTH = defaultPageSize[0]
 
 
+# Issue #23 - test generate_password()
+# TODO: Add unit tests for following logic and remove this comment.
 def generate_password(length):
     """Generate a string for the password for the pdf."""
     # Generate a random string of hexadecimal digits
@@ -83,6 +85,8 @@ class ConditionalSpacer(Spacer):
         return (availWidth, height)
 
 
+# Issue #24 - test get_image()
+# TODO: Add unit tests for following logic and remove this comment.
 def get_image(path, width=1 * inch):
     """Read in an image and scale it based on the width argument."""
     img = utils.ImageReader(path)
@@ -91,6 +95,8 @@ def get_image(path, width=1 * inch):
     return Image(path, width=width, height=(width * aspect))
 
 
+# Issue #25 - test format_table()
+# TODO: Add unit tests for following logic and remove this comment.
 def format_table(df, header_style, column_widths, column_style_list):
     """Read in a dataframe and convert it to a table and format it with a provided style list."""
     header_row = [
@@ -172,6 +178,8 @@ def format_table(df, header_style, column_widths, column_style_list):
     return table
 
 
+# Issue #26 - test report_gen()
+# TODO: Add unit tests for following logic and remove this comment.
 def report_gen(tpt_info, payloads_list):
     """Generate a TPT report with data passed in the data dictionary."""
 
