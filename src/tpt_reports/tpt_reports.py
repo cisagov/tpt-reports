@@ -69,6 +69,7 @@ def parse_json(data):
                 num_payloads += 1
                 payload_data = {}
                 payload_data["Payload"] = payload["payload_description"]
+                # c2_protocol requires additional space to match input file format
                 payload_data["C2 Protocol"] = payload["c2_protocol "]
 
                 if payload["border_protection"] == "N":
