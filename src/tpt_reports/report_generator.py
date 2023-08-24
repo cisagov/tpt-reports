@@ -32,7 +32,7 @@ from reportlab.platypus.doctemplate import (
 from reportlab.platypus.frames import Frame
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-
+TODAYS_DATE = datetime.today().strftime("%m/%d/%Y")
 
 # Set fonts to be used in the pdf
 pdfmetrics.registerFont(
@@ -189,7 +189,7 @@ def report_gen(tpt_info, payloads_list):
         canvas.drawString(
             1.08 * inch,
             1.5 * inch,
-            f"""Publication: {tpt_info["report_date"]}""",
+            f"""Publication: {TODAYS_DATE}""",
         )
         canvas.drawString(
             1.08 * inch,
@@ -313,7 +313,7 @@ def report_gen(tpt_info, payloads_list):
         format_table(
             pd.DataFrame.from_dict(
                 {
-                    "Report Date": [tpt_info.get("report_date", datetime.now())],
+                    "Report Date": TODAYS_DATE,
                     "Stakeholder Name": [tpt_info["election_name"]],
                     "Domain Tested": [tpt_info["domain_tested"]],
                     "Assessment ID": [tpt_info["servicenow_id"]],
