@@ -10,3 +10,35 @@ __pycache__
 .python-version
 *.egg-info
 dist
+
+## Log exclusion
+*.log
+
+## Report Output Exclusion
+*.pdf
+
+## Data input exclusion
+*.json
+
+
+## Virtualenv
+.venv
+.vs
+
+## VS Code
+.vscode
+
+.profile-data
+
+.env
+old.env
+/.vsenv
+
+*.mmdb
+.geoipupdate.lock
+config.ini
+Dockerfile-x
+*.swp
+
+*.DS_store
+*.vscode
