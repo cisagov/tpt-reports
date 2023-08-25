@@ -177,7 +177,7 @@ def main() -> None:
     LOGGER.info("Loading TPT Phish Report, Version : %s", __version__)
 
     # Issue #27 - Input and output file directories change
-    # TODO: Validate that the output_directory is not in the repo
+    # TODO: Validate that the output_directory is not in the repo.
     # Create output directory
     if not os.path.exists(validated_args["OUTPUT_DIRECTORY"]):
         os.mkdir(validated_args["OUTPUT_DIRECTORY"])
