@@ -70,7 +70,15 @@ def test_log_levels(level):
     with patch.object(
         sys,
         "argv",
-        ["bogus", f"--log-level={level}", "test", "test", "test", "test", "test"],
+        [
+            "bogus",
+            f"--log-level={level}",
+            "test",
+            "test",
+            "test",
+            "test.json",
+            "./test_output",
+        ],
     ):
         with patch.object(logging.root, "handlers", []):
             assert (
