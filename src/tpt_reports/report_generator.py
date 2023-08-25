@@ -36,13 +36,13 @@ TODAYS_DATE = datetime.today().strftime("%m/%d/%Y")
 
 # Set fonts to be used in the pdf
 pdfmetrics.registerFont(
-    TTFont("Franklin_Gothic_Book", BASE_DIR + "/fonts/FranklinGothicBook.ttf")
+    TTFont("Franklin_Gothic_Book", f"{BASE_DIR}/fonts/FranklinGothicBook.ttf")
 )
 
 pdfmetrics.registerFont(
     TTFont(
         "Franklin_Gothic_Medium_Regular",
-        BASE_DIR + "/fonts/FranklinGothicMediumRegular.ttf",
+        f"{BASE_DIR}/fonts/FranklinGothicMediumRegular.ttf",
     )
 )
 
@@ -187,7 +187,7 @@ def report_gen(tpt_info, payloads_list):
         """Build static elements of the cover page."""
         canvas.saveState()
         canvas.drawInlineImage(
-            BASE_DIR + "/assets/cisa.png", 45, 705, width=65, height=65
+            f"{BASE_DIR}/assets/cisa.png", 45, 705, width=65, height=65
         )
         canvas.setStrokeColor(HexColor("#003e67"))
         canvas.setLineWidth(1.5)
@@ -221,7 +221,7 @@ def report_gen(tpt_info, payloads_list):
 
     # Load the doc and create the frames for page structures to be dynamically filled
     doc = MyDocTemplate(
-        tpt_info["output_directory"] + "/TPT_Report" + ".pdf", generate_password(17)
+        f"{tpt_info['output_directory']}/TPT_Report.pdf", generate_password(17)
     )
 
     # frame: x, y, width, height
@@ -305,7 +305,7 @@ def report_gen(tpt_info, payloads_list):
     point24_spacer = ConditionalSpacer(1, 24)
 
     # Appends sequentially with the frames created above i.e. title_page then content_page
-    Story.append(get_image(BASE_DIR + "/assets/TitlePage.png", width=9 * inch))
+    Story.append(get_image(f"{BASE_DIR}/assets/TitlePage.png", width=9 * inch))
     Story.append(point24_spacer)
     Story.append(
         Paragraph(
@@ -363,7 +363,7 @@ def report_gen(tpt_info, payloads_list):
         )
     )
     Story.append(point12_spacer)
-    Story.append(get_image(BASE_DIR + "/assets/Picture2.png", width=4 * inch))
+    Story.append(get_image(f"{BASE_DIR}/assets/Picture2.png", width=4 * inch))
     Story.append(
         Paragraph("Figure 1: Layered Defense Model for Email Security ", image_text)
     )
@@ -417,5 +417,5 @@ def report_gen(tpt_info, payloads_list):
     )
 
     doc.multiBuild(Story)
-    print("REPORT KEY: " + os.environ.get("TPT_REPORT_KEY"))
+    print(f"REPORT KEY: {os.environ.get('TPT_REPORT_KEY')}")
     return doc
