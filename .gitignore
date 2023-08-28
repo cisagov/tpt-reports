@@ -36,7 +36,7 @@ dist
 .coverage
 htmlcov/
 
-# Vim
+## Vim ##
 *.swp
 
 ## VS Code ##
