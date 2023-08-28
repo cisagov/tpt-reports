@@ -11,14 +11,10 @@ __pycache__
 *.egg-info
 dist
 
-## Log exclusion
-*.log
-
-## Report Output Exclusion
-*.pdf
-
-## Data input exclusion
+## Project Specific ##
 *.json
+*.log
+*.pdf
 
 
 ## Virtualenv
