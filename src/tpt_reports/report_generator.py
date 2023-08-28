@@ -220,8 +220,8 @@ def report_gen(tpt_info, payloads_list):
         )
 
     # Issue #28 - Add a more descriptive report file name
-    # TODO: Update the report file name to be more descriptive and specific
-    # Load the doc and create the frames for page structures to be dynamically filled.
+    # TODO: Update the report file name to be more descriptive and specific.
+    # Load the doc and create the frames for page structures to be dynamically filled
     doc = MyDocTemplate(
         f"{tpt_info['output_directory']}/TPT_Report.pdf", generate_password(17)
     )
