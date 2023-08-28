@@ -131,8 +131,6 @@ def generate_reports(
         return False
 
 
-# Issue #4 - Add ReportLab code and library
-# TODO: Add in the ReportLab code, library, parsing logic and remove this comment.
 def main() -> None:
     """Load JSON File from supplied argument."""
     args: Dict[str, str] = docopt.docopt(__doc__, version=__version__)
