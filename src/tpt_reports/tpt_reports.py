@@ -174,7 +174,7 @@ def main() -> None:
         format="%(asctime)-15s %(levelname)s %(message)s", level=log_level.upper()
     )
 
-    LOGGER.info("Loading TPT Phish Report, Version : %s", __version__)
+    LOGGER.info("Loading TPT Report, Version : %s", __version__)
 
     # Issue #27 - Input and output file directories change
     # TODO: Validate that the output_directory is not in the repo.
