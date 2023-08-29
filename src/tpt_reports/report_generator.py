@@ -66,14 +66,14 @@ def generate_password(length):
 class MyDocTemplate(BaseDocTemplate):
     """Extend the BaseDocTemplate to adjust Template."""
 
-    def __init__(self, filename, encrypt, **kw):
+    def __init__(self, filename, report_key, **kw):
         """Initialize MyDocTemplate."""
-        # Set Key as ENV variable
-        os.environ["TPT_REPORT_KEY"] = encrypt
+        # Set report_key as an environment variable
+        os.environ["TPT_REPORT_KEY"] = report_key
         self.allowSplitting = 0
         BaseDocTemplate.__init__(self, filename, **kw)
         self.pagesize = defaultPageSize
-        self.encrypt = encrypt
+        self.report_key = report_key
 
 
 class ConditionalSpacer(Spacer):
