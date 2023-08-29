@@ -88,7 +88,7 @@ setup(
     keywords="Technical Payload Testing (TPT) Report",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    package_data={"tpt_reports": ["fonts/*.ttf", "assets/*.png"]},
+    package_data={"tpt_reports": ["assets/*.png", "fonts/*.ttf"]},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
     include_package_data=True,
     install_requires=[
