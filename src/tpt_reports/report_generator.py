@@ -33,6 +33,7 @@ from reportlab.platypus.frames import Frame
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 TODAYS_DATE = datetime.today().strftime("%m/%d/%Y")
+REPORT_KEY_LENGTH = 17
 
 # Set fonts to be used in the PDF
 pdfmetrics.registerFont(
@@ -50,17 +51,6 @@ pdfmetrics.registerFont(
 defaultPageSize = letter
 PAGE_HEIGHT = defaultPageSize[1]
 PAGE_WIDTH = defaultPageSize[0]
-
-
-# Issue #23 - test generate_password()
-# TODO: Add unit tests for following logic and remove this comment.
-def generate_password(length):
-    """Generate a string for the password for the PDF."""
-    # Generate a random string of hexadecimal digits
-    password = secrets.token_hex(length // 2)
-
-    # Return the first `length` characters of the password
-    return password[:length]
 
 
 class MyDocTemplate(BaseDocTemplate):
@@ -219,12 +209,13 @@ def report_gen(tpt_info, payloads_list):
             f"CISA | DEFEND TODAY, SECURE TOMORROW {doc.page}",
         )
 
+    # Generate report key for encryption
+    report_key = secrets.token_hex(REPORT_KEY_LENGTH)[:REPORT_KEY_LENGTH]
+
     # Issue #28 - Add a more descriptive report file name
     # TODO: Update the report file name to be more descriptive and specific.
     # Load the doc and create the frames for page structures to be dynamically filled
-    doc = MyDocTemplate(
-        f"{tpt_info['output_directory']}/TPT_Report.pdf", generate_password(17)
-    )
+    doc = MyDocTemplate(f"{tpt_info['output_directory']}/TPT_Report.pdf", report_key)
 
     # frame: x, y, width, height
     title_frame = Frame(
