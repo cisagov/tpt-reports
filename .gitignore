@@ -32,7 +32,7 @@ __pycache__
 *.egg-info
 dist
 
-## Unit test / coverage reports ##
+## Unit Test / Coverage Reports ##
 .coverage
 htmlcov/
 
