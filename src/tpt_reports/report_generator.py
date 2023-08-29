@@ -55,7 +55,7 @@ PAGE_WIDTH = defaultPageSize[0]
 # Issue #23 - test generate_password()
 # TODO: Add unit tests for following logic and remove this comment.
 def generate_password(length):
-    """Generate a string for the password for the pdf."""
+    """Generate a string for the password for the PDF."""
     # Generate a random string of hexadecimal digits
     password = secrets.token_hex(length // 2)
 
