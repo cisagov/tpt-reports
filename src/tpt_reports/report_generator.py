@@ -34,7 +34,7 @@ from reportlab.platypus.frames import Frame
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 TODAYS_DATE = datetime.today().strftime("%m/%d/%Y")
 
-# Set fonts to be used in the pdf
+# Set fonts to be used in the PDF
 pdfmetrics.registerFont(
     TTFont("Franklin_Gothic_Book", f"{BASE_DIR}/fonts/FranklinGothicBook.ttf")
 )
