@@ -73,7 +73,7 @@ class MyDocTemplate(BaseDocTemplate):
         self.allowSplitting = 0
         BaseDocTemplate.__init__(self, filename, **kw)
         self.pagesize = defaultPageSize
-        self.report_key = report_key
+        self.encrypt = report_key
 
 
 class ConditionalSpacer(Spacer):
