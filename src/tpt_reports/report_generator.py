@@ -46,7 +46,7 @@ pdfmetrics.registerFont(
     )
 )
 
-# Set your page size
+# Set page size
 defaultPageSize = letter
 PAGE_HEIGHT = defaultPageSize[1]
 PAGE_WIDTH = defaultPageSize[0]
