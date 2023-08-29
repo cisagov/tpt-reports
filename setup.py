@@ -85,7 +85,7 @@ setup(
     ],
     python_requires=">=3.6",
     # What does your project relate to?
-    keywords="Technical Payload Testing (TPT) Report",
+    keywords="tpt technical payload testing report",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     package_data={"tpt_reports": ["assets/*.png", "fonts/*.ttf"]},
