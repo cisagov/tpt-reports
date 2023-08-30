@@ -302,7 +302,7 @@ def report_gen(tpt_info, payloads_list):
     Story.append(point24_spacer)
     Story.append(
         Paragraph(
-            f"""Technical Payload Test (TPT) Report - {tpt_info["election_name"]}""",
+            f"""Technical Phishing Test (TPT) Report - {tpt_info["election_name"]}""",
             cover_heading,
         )
     )
