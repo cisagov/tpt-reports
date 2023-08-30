@@ -1,11 +1,11 @@
-# Technical Payload Test Reports (TPT Reports) #
+# Technical Phishing Test Reports (TPT Reports) #
 
 [![GitHub Build Status](https://github.com/cisagov/tpt-reports/workflows/build/badge.svg)](https://github.com/cisagov/tpt-reports/actions)
 [![CodeQL](https://github.com/cisagov/tpt-reports/workflows/CodeQL/badge.svg)](https://github.com/cisagov/tpt-reports/actions/workflows/codeql-analysis.yml)
 [![Coverage Status](https://coveralls.io/repos/github/cisagov/tpt-reports/badge.svg?branch=develop)](https://coveralls.io/github/cisagov/tpt-reports?branch=develop)
 [![Known Vulnerabilities](https://snyk.io/test/github/cisagov/tpt-reports/develop/badge.svg)](https://snyk.io/test/github/cisagov/tpt-reports)
 
-This package is used to generate and deliver CISA Technical Payload Test (TPT)
+This package is used to generate and deliver CISA Technical Phishing Test (TPT)
 Reports. Reports are delivered locally and include an encrypted PDF attachment.
 The package collects raw data and creates an encrypted PDF.
 
