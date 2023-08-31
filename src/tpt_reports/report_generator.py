@@ -296,6 +296,7 @@ def report_gen(tpt_info, payloads_list):
     # Create dynamic content; repeated and random elements used in the report
     point12_spacer = ConditionalSpacer(1, 12)
     point24_spacer = ConditionalSpacer(1, 24)
+    point30_spacer = ConditionalSpacer(1, 30)
 
     # Appends sequentially with the frames created above i.e. title_page then content_page
     Story.append(get_image(f"{BASE_DIR}/assets/TitlePage.png", width=9 * inch))
@@ -325,7 +326,7 @@ def report_gen(tpt_info, payloads_list):
             [None, body, body, body],
         )
     )
-    Story.append(Spacer(1, 30))
+    Story.append(point30_spacer)
     Story.append(
         format_table(
             pd.DataFrame.from_dict(
@@ -341,7 +342,7 @@ def report_gen(tpt_info, payloads_list):
             [body, None],
         )
     )
-    Story.append(Spacer(1, 30))
+    Story.append(point30_spacer)
     Story.append(Paragraph("DESCRIPTION", h2))
     Story.append(
         Paragraph(
