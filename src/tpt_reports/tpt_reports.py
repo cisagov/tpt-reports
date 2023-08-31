@@ -115,10 +115,10 @@ def generate_reports(
 ):
     """Process steps for generating report data."""
     tpt_info = {}
-    tpt_info["servicenow_id"] = servicenow_id
-    tpt_info["election_name"] = election_name
     tpt_info["domain_tested"] = domain_tested
+    tpt_info["election_name"] = election_name
     tpt_info["output_directory"] = output_directory
+    tpt_info["servicenow_id"] = servicenow_id
     data = load_json_file(json_file_path)
     if data:
         payloads_meta, payloads_list = parse_json(data)
