@@ -121,8 +121,7 @@ def generate_reports(
     tpt_info["servicenow_id"] = servicenow_id
     data = load_json_file(json_file_path)
     if data:
-        payloads_meta, payloads_list = parse_json(data)
-        tpt_info["payloads_meta"] = payloads_meta
+        tpt_info["payloads_meta"], payloads_list = parse_json(data)
         logging.debug(tpt_info)
         logging.debug(payloads_list)
         report_gen(tpt_info, payloads_list)
