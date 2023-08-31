@@ -61,9 +61,9 @@ class MyDocTemplate(BaseDocTemplate):
         # Set report_key as an environment variable
         os.environ["TPT_REPORT_KEY"] = report_key
         self.allowSplitting = 0
+        BaseDocTemplate.__init__(self, filename, **kw)
         self.encrypt = report_key
         self.pagesize = defaultPageSize
-        BaseDocTemplate.__init__(self, filename, **kw)
 
 
 class ConditionalSpacer(Spacer):
