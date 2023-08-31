@@ -147,7 +147,7 @@ def main() -> None:
             "SERVICENOW_ID": Use(str, error="SERVICENOW_ID must be a string."),
             "ELECTION_NAME": Use(str, error="ELECTION_NAME must be a string."),
             "DOMAIN_TESTED": Use(str, error="DOMAIN_TESTED must be a string."),
-            "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be an string."),
+            "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be a string."),
             "OUTPUT_DIRECTORY": Use(str, error="OUTPUT_DIRECTORY must exist."),
         }
     )
