@@ -56,13 +56,13 @@ def load_json_file(file_path):
 # TODO: Add unit tests for following logic and remove this comment.
 def parse_json(data):
     """Parse JSON object for values to report."""
-    payloads_list = []
-    payloads_meta = {}
-    num_payloads = 0
-    host_blocked = 0
-    host_not_blocked = 0
     border_blocked = 0
     border_not_blocked = 0
+    host_blocked = 0
+    host_not_blocked = 0
+    num_payloads = 0
+    payloads_list = []
+    payloads_meta = {}
     try:
         if data:
             for payload in data["payloads"]:
