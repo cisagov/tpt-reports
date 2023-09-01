@@ -1,4 +1,4 @@
-"""cisagov/tpt-reports: A tool for creating Technical Payload Test (TPT) reports.
+"""cisagov/tpt-reports: A tool for creating Technical Phishing Test (TPT) reports.
 
 Usage:
   tpt-reports SERVICENOW_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH OUTPUT_DIRECTORY [--log-level=LEVEL]
