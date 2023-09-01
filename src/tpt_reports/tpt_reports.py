@@ -180,6 +180,8 @@ def main() -> None:
     if not os.path.exists(validated_args["OUTPUT_DIRECTORY"]):
         os.mkdir(validated_args["OUTPUT_DIRECTORY"])
 
+    # Issue #28 - Add a more descriptive report file name
+    # TODO: Log when report generation begin/ends and update filename output.
     if generate_reports(
         servicenow_id, election_name, domain_tested, output_directory, json_file_path
     ):
