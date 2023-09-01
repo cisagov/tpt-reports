@@ -60,8 +60,11 @@ class MyDocTemplate(BaseDocTemplate):
         """Initialize MyDocTemplate."""
         # Set report_key as an environment variable
         os.environ["TPT_REPORT_KEY"] = report_key
+        # allowSplitting must be set prior to BaseDocTemplate per docs
         self.allowSplitting = 0
+        # Initialize document
         BaseDocTemplate.__init__(self, filename, **kw)
+        # encrypt must be called after initialization per docs
         self.encrypt = report_key
         self.pagesize = defaultPageSize
 
