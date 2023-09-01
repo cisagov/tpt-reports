@@ -142,6 +142,8 @@ def main() -> None:
                 error="Possible values for --log-level are "
                 + "debug, info, warning, error, and critical.",
             ),
+            # Issue #30 - Remove 3rd party reference from arguments
+            # TODO: Define a generic ID format to replace SERVICENOW_ID and provide validation.
             "SERVICENOW_ID": Use(str, error="SERVICENOW_ID must be a string."),
             "ELECTION_NAME": Use(str, error="ELECTION_NAME must be a string."),
             "DOMAIN_TESTED": Use(str, error="DOMAIN_TESTED must be a string."),
