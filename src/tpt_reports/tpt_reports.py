@@ -96,7 +96,6 @@ def parse_json(data):
         payloads_meta["border_not_blocked"] = border_not_blocked
         payloads_meta["host_blocked"] = host_blocked
         payloads_meta["host_not_blocked"] = host_not_blocked
-        payloads_meta["num_blocked"] = num_payloads
         payloads_meta["num_payloads"] = num_payloads
         payloads_blocked = border_blocked + host_blocked
         payloads_meta["payloads_blocked"] = payloads_blocked
