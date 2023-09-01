@@ -2,6 +2,27 @@
 # Files already tracked by Git are not affected.
 # See: https://git-scm.com/docs/gitignore
 
+## Docker ##
+Dockerfile-x
+
+## Environments ##
+.env
+.venv
+/old.env
+ENV/
+env.bak/
+env/
+venv.bak/
+venv/
+
+## MacOS ##
+.DS_Store
+
+## Project Specific ##
+*.json
+*.log
+*.pdf
+
 ## Python ##
 __pycache__
 .coverage
@@ -10,3 +31,13 @@ __pycache__
 .python-version
 *.egg-info
 dist
+
+## Unit Test / Coverage Reports ##
+.coverage
+htmlcov/
+
+## Vim ##
+*.swp
+
+## VS Code ##
+.vscode/

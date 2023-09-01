@@ -67,7 +67,19 @@ def test_release_version():
 @pytest.mark.parametrize("level", log_levels)
 def test_log_levels(level):
     """Validate commandline log-level arguments."""
-    with patch.object(sys, "argv", ["bogus", f"--log-level={level}", "test"]):
+    with patch.object(
+        sys,
+        "argv",
+        [
+            "bogus",
+            f"--log-level={level}",
+            "test",
+            "test",
+            "test",
+            "test.json",
+            "./test_output",
+        ],
+    ):
         with patch.object(logging.root, "handlers", []):
             assert (
                 logging.root.hasHandlers() is False
@@ -89,7 +101,11 @@ def test_log_levels(level):
 
 def test_bad_log_level():
     """Validate bad log-level argument returns error."""
-    with patch.object(sys, "argv", ["bogus", "--log-level=emergency", "test"]):
+    with patch.object(
+        sys,
+        "argv",
+        ["bogus", "--log-level=emergency", "test", "test", "test", "test", "test"],
+    ):
         return_code = None
         try:
             tpt_reports.tpt_reports.main()
