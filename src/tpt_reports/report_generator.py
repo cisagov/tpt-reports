@@ -60,10 +60,13 @@ class MyDocTemplate(BaseDocTemplate):
         """Initialize MyDocTemplate."""
         # Set report_key as an environment variable
         os.environ["TPT_REPORT_KEY"] = report_key
+        # allowSplitting must be set prior to BaseDocTemplate per docs
         self.allowSplitting = 0
+        # Initialize document
         BaseDocTemplate.__init__(self, filename, **kw)
-        self.pagesize = defaultPageSize
+        # encrypt must be called after initialization per docs
         self.encrypt = report_key
+        self.pagesize = defaultPageSize
 
 
 class ConditionalSpacer(Spacer):
@@ -296,7 +299,7 @@ def report_gen(tpt_info, payloads_list):
     # Create dynamic content; repeated and random elements used in the report
     point12_spacer = ConditionalSpacer(1, 12)
     point24_spacer = ConditionalSpacer(1, 24)
-    point30_spacer = ConditionalSpacer(1, 30)
+    point30_spacer = Spacer(1, 30)
 
     # Appends sequentially with the frames created above i.e. title_page then content_page
     Story.append(get_image(f"{BASE_DIR}/assets/TitlePage.png", width=9 * inch))

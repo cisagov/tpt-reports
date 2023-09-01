@@ -56,13 +56,13 @@ def load_json_file(file_path):
 # TODO: Add unit tests for following logic and remove this comment.
 def parse_json(data):
     """Parse JSON object for values to report."""
-    payloads_list = []
-    payloads_meta = {}
-    num_payloads = 0
-    host_blocked = 0
-    host_not_blocked = 0
     border_blocked = 0
     border_not_blocked = 0
+    host_blocked = 0
+    host_not_blocked = 0
+    num_payloads = 0
+    payloads_list = []
+    payloads_meta = {}
     try:
         if data:
             for payload in data["payloads"]:
@@ -92,16 +92,13 @@ def parse_json(data):
 
                 payloads_list.append(payload_data)
 
-        payloads_meta["num_payloads"] = num_payloads
-        payloads_meta["host_blocked"] = host_blocked
-        payloads_meta["host_not_blocked"] = host_not_blocked
         payloads_meta["border_blocked"] = border_blocked
         payloads_meta["border_not_blocked"] = border_not_blocked
-        payloads_meta["num_blocked"] = num_payloads
-        payloads_not_blocked = border_not_blocked + host_not_blocked
-        payloads_meta["payloads_not_blocked"] = payloads_not_blocked
-        payloads_blocked = border_blocked + host_blocked
-        payloads_meta["payloads_blocked"] = payloads_blocked
+        payloads_meta["host_blocked"] = host_blocked
+        payloads_meta["host_not_blocked"] = host_not_blocked
+        payloads_meta["num_payloads"] = num_payloads
+        payloads_meta["payloads_blocked"] = border_blocked + host_blocked
+        payloads_meta["payloads_not_blocked"] = border_not_blocked + host_not_blocked
 
     except Exception as e:
         LOGGER.exception(str(e))
@@ -115,14 +112,13 @@ def generate_reports(
 ):
     """Process steps for generating report data."""
     tpt_info = {}
-    tpt_info["servicenow_id"] = servicenow_id
-    tpt_info["election_name"] = election_name
     tpt_info["domain_tested"] = domain_tested
+    tpt_info["election_name"] = election_name
     tpt_info["output_directory"] = output_directory
+    tpt_info["servicenow_id"] = servicenow_id
     data = load_json_file(json_file_path)
     if data:
-        payloads_meta, payloads_list = parse_json(data)
-        tpt_info["payloads_meta"] = payloads_meta
+        tpt_info["payloads_meta"], payloads_list = parse_json(data)
         logging.debug(tpt_info)
         logging.debug(payloads_list)
         report_gen(tpt_info, payloads_list)
@@ -144,11 +140,15 @@ def main() -> None:
                 error="Possible values for --log-level are "
                 + "debug, info, warning, error, and critical.",
             ),
+            # Issue #30 - Remove 3rd party reference from arguments
+            # TODO: Define a generic ID format to replace SERVICENOW_ID and provide validation.
+            # Issue #36 - Validate DOMAIN_TESTED argument inputs
+            # TODO: Provide input validation for DOMAIN_TESTED.
             "SERVICENOW_ID": Use(str, error="SERVICENOW_ID must be a string."),
             "ELECTION_NAME": Use(str, error="ELECTION_NAME must be a string."),
             "DOMAIN_TESTED": Use(str, error="DOMAIN_TESTED must be a string."),
-            "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be an string."),
-            "OUTPUT_DIRECTORY": Use(str, error="OUTPUT_DIRECTORY must exist."),
+            "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be a string."),
+            "OUTPUT_DIRECTORY": Use(str, error="OUTPUT_DIRECTORY must be a string."),
         }
     )
 
@@ -180,6 +180,8 @@ def main() -> None:
     if not os.path.exists(validated_args["OUTPUT_DIRECTORY"]):
         os.mkdir(validated_args["OUTPUT_DIRECTORY"])
 
+    # Issue #28 - Add a more descriptive report file name
+    # TODO: Log when report generation begin/ends and update filename output.
     if generate_reports(
         servicenow_id, election_name, domain_tested, output_directory, json_file_path
     ):
