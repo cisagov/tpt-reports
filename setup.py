@@ -96,6 +96,7 @@ setup(
         "numpy",
         "pandas",
         "reportlab",
+        "types-requests",
         "schema",
         "setuptools >= 24.2.0",
     ],

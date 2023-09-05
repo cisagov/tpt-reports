@@ -28,6 +28,7 @@ from typing import Any, Dict
 
 # Third-Party Libraries
 import docopt
+import requests
 from schema import And, Schema, SchemaError, Use
 
 from ._version import __version__
@@ -154,8 +155,17 @@ def main() -> None:
 
     try:
         validated_args: Dict[str, Any] = schema.validate(args)
+        requests.get(validated_args["DOMAIN_TESTED"])
     except SchemaError as err:
         # Exit because one or more of the arguments were invalid
+        print(err, file=sys.stderr)
+        sys.exit(1)
+    except requests.exceptions.MissingSchema as err:
+        print("DOMAIN_TESTED is not a valid URL...")
+        print(err, file=sys.stderr)
+        sys.exit(1)
+    except requests.ConnectionError as err:
+        print("DOMAIN_TESTED could not be reached...")
         print(err, file=sys.stderr)
         sys.exit(1)
 
