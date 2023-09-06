@@ -155,17 +155,9 @@ def main() -> None:
 
     try:
         validated_args: Dict[str, Any] = schema.validate(args)
-        requests.get(validated_args["DOMAIN_TESTED"])
+
     except SchemaError as err:
         # Exit because one or more of the arguments were invalid
-        LOGGER.error(err)
-        sys.exit(1)
-    except requests.exceptions.MissingSchema as err:
-        LOGGER.error("DOMAIN_TESTED is not a valid URL...")
-        LOGGER.error(err)
-        sys.exit(1)
-    except requests.ConnectionError as err:
-        LOGGER.error("DOMAIN_TESTED could not be reached...")
         LOGGER.error(err)
         sys.exit(1)
 
@@ -185,6 +177,17 @@ def main() -> None:
         datefmt="%m/%d/%Y %I:%M:%S",
         level=log_level.upper(),
     )
+
+    try:
+        requests.get(domain_tested)
+    except requests.exceptions.MissingSchema as err:
+        LOGGER.error("DOMAIN_TESTED is not a valid URL...")
+        LOGGER.error(err)
+        sys.exit(1)
+    except requests.ConnectionError as err:
+        LOGGER.error("DOMAIN_TESTED could not be reached...")
+        LOGGER.error(err)
+        sys.exit(1)
 
     LOGGER.info("Loading TPT Report, Version : %s", __version__)
 
