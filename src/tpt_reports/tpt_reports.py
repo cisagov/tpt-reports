@@ -158,15 +158,15 @@ def main() -> None:
         requests.get(validated_args["DOMAIN_TESTED"])
     except SchemaError as err:
         # Exit because one or more of the arguments were invalid
-        print(err, file=sys.stderr)
+        LOGGER.error(err)
         sys.exit(1)
     except requests.exceptions.MissingSchema as err:
-        print("DOMAIN_TESTED is not a valid URL...")
-        print(err, file=sys.stderr)
+        LOGGER.error("DOMAIN_TESTED is not a valid URL...")
+        LOGGER.error(err)
         sys.exit(1)
     except requests.ConnectionError as err:
-        print("DOMAIN_TESTED could not be reached...")
-        print(err, file=sys.stderr)
+        LOGGER.error("DOMAIN_TESTED could not be reached...")
+        LOGGER.error(err)
         sys.exit(1)
 
     # Assign validated arguments to variables
@@ -177,9 +177,13 @@ def main() -> None:
     output_directory: str = validated_args["OUTPUT_DIRECTORY"]
     json_file_path: str = validated_args["JSON_FILE_PATH"]
 
-    # Set up logging
+    # Setup logging to central file
     logging.basicConfig(
-        format="%(asctime)-15s %(levelname)s %(message)s", level=log_level.upper()
+        filename=LOGGING_FILE,
+        filemode="a",
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%m/%d/%Y %I:%M:%S",
+        level=log_level.upper(),
     )
 
     LOGGER.info("Loading TPT Report, Version : %s", __version__)
