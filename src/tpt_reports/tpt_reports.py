@@ -179,7 +179,7 @@ def main() -> None:
     )
 
     try:
-        requests.get(domain_tested)
+        requests.get("https://" + domain_tested)
     except requests.exceptions.MissingSchema as err:
         LOGGER.error("DOMAIN_TESTED is not a valid URL...")
         LOGGER.error(err)
