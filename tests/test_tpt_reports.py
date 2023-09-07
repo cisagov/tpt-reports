@@ -75,7 +75,7 @@ def test_log_levels(level):
             f"--log-level={level}",
             "test",
             "test",
-            "https://www.cisa.gov",
+            "cisa.gov",
             "test.json",
             "./test_output",
         ],
