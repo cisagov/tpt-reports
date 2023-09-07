@@ -28,8 +28,8 @@ from typing import Any, Dict
 
 # Third-Party Libraries
 import docopt
-import requests
 from schema import And, Schema, SchemaError, Use
+from validator_collection import validators
 
 from ._version import __version__
 from .report_generator import report_gen
@@ -155,10 +155,21 @@ def main() -> None:
 
     try:
         validated_args: Dict[str, Any] = schema.validate(args)
+        validators.domain(validated_args["DOMAIN_TESTED"])
+        validators.file_exists(validated_args["JSON_FILE_PATH"])
+        validators.path(validated_args["OUTPUT_DIRECTORY"])
 
     except SchemaError as err:
         # Exit because one or more of the arguments were invalid
-        LOGGER.error(err)
+        print(err, file=sys.stderr)
+        sys.exit(1)
+    except ValueError as err:
+        # Exit due to invalid value supplied
+        print(err, file=sys.stderr)
+        sys.exit(1)
+    except OSError as err:
+        # Exit if an invalid file path is provided
+        print(err, file=sys.stderr)
         sys.exit(1)
 
     # Assign validated arguments to variables
@@ -177,17 +188,6 @@ def main() -> None:
         datefmt="%m/%d/%Y %I:%M:%S",
         level=log_level.upper(),
     )
-
-    try:
-        requests.get("https://" + domain_tested)
-    except requests.exceptions.MissingSchema as err:
-        LOGGER.error("DOMAIN_TESTED is not a valid URL...")
-        LOGGER.error(err)
-        sys.exit(1)
-    except requests.ConnectionError as err:
-        LOGGER.error("DOMAIN_TESTED could not be reached...")
-        LOGGER.error(err)
-        sys.exit(1)
 
     LOGGER.info("Loading TPT Report, Version : %s", __version__)
 
