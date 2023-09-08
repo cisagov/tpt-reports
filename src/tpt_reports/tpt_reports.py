@@ -156,8 +156,6 @@ def main() -> None:
     try:
         validated_args: Dict[str, Any] = schema.validate(args)
         validators.domain(validated_args["DOMAIN_TESTED"])
-        validators.file_exists(validated_args["JSON_FILE_PATH"])
-        validators.path(validated_args["OUTPUT_DIRECTORY"])
 
     except SchemaError as err:
         # Exit because one or more of the arguments were invalid
