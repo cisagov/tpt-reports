@@ -112,3 +112,26 @@ def test_bad_log_level():
         except SystemExit as sys_exit:
             return_code = sys_exit.code
         assert return_code == 1, "main() should exit with error"
+
+
+def test_domain_validation():
+    """Validate invalid domain arguments."""
+    with patch.object(
+        sys,
+        "argv",
+        [
+            "bogus",
+            "--log-level=debug",
+            "test",
+            "test",
+            "cisa",
+            "test.json",
+            "./test_output",
+        ],
+    ):
+        return_code = None
+        try:
+            tpt_reports.tpt_reports.main()
+        except SystemExit as sys_exit:
+            return_code = sys_exit.code
+            assert return_code == 2, "main() should return with error"
