@@ -164,10 +164,6 @@ def main() -> None:
         # Exit due to invalid value supplied
         print(err, file=sys.stderr)
         sys.exit(2)
-    except OSError as err:
-        # Exit if an invalid file path is provided
-        print(err, file=sys.stderr)
-        sys.exit(3)
 
     # Assign validated arguments to variables
     log_level: str = validated_args["--log-level"]
