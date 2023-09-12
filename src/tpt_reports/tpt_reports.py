@@ -1,7 +1,7 @@
 """cisagov/tpt-reports: A tool for creating Technical Phishing Test (TPT) reports.
 
 Usage:
-  tpt-reports SERVICENOW_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH OUTPUT_DIRECTORY [--log-level=LEVEL]
+  tpt-reports ASSESSMENT_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH OUTPUT_DIRECTORY [--log-level=LEVEL]
 
 Options:
   -h --help                         Show this message.
@@ -9,7 +9,7 @@ Options:
                                     the specified value.  Valid values are "debug", "info",
                                     "warning", "error", and "critical". [default: info]
 Arguments:
-  SERVICENOW_ID                     The ID number in Service Now
+  ASSESSMENT_ID                     The assigned Assessment ID
   ELECTION_NAME                     The name of the election being reported on.
   DOMAIN_TESTED                     The email domain used in the testing.
   JSON_FILE_PATH                    Path to the JSON file to act as a data source.
@@ -108,14 +108,14 @@ def parse_json(data):
 # Issue #22 - test generate_reports()
 # TODO: Add unit tests for following logic and remove this comment.
 def generate_reports(
-    servicenow_id, election_name, domain_tested, output_directory, json_file_path
+    assessment_id, election_name, domain_tested, output_directory, json_file_path
 ):
     """Process steps for generating report data."""
     tpt_info = {}
     tpt_info["domain_tested"] = domain_tested
     tpt_info["election_name"] = election_name
     tpt_info["output_directory"] = output_directory
-    tpt_info["servicenow_id"] = servicenow_id
+    tpt_info["assessment_id"] = assessment_id
     data = load_json_file(json_file_path)
     if data:
         tpt_info["payloads_meta"], payloads_list = parse_json(data)
@@ -141,10 +141,10 @@ def main() -> None:
                 + "debug, info, warning, error, and critical.",
             ),
             # Issue #30 - Remove 3rd party reference from arguments
-            # TODO: Define a generic ID format to replace SERVICENOW_ID and provide validation.
+            # TODO: Define a generic ID format to replace ASSESSMENT_ID and provide validation.
             # Issue #36 - Validate DOMAIN_TESTED argument inputs
             # TODO: Provide input validation for DOMAIN_TESTED.
-            "SERVICENOW_ID": Use(str, error="SERVICENOW_ID must be a string."),
+            "ASSESSMENT_ID": Use(str, error="ASSESSMENT_ID must be a string."),
             "ELECTION_NAME": Use(str, error="ELECTION_NAME must be a string."),
             "DOMAIN_TESTED": Use(str, error="DOMAIN_TESTED must be a string."),
             "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be a string."),
@@ -161,7 +161,7 @@ def main() -> None:
 
     # Assign validated arguments to variables
     log_level: str = validated_args["--log-level"]
-    servicenow_id: str = validated_args["SERVICENOW_ID"]
+    assessment_id: str = validated_args["ASSESSMENT_ID"]
     election_name: str = validated_args["ELECTION_NAME"]
     domain_tested: str = validated_args["DOMAIN_TESTED"]
     output_directory: str = validated_args["OUTPUT_DIRECTORY"]
@@ -183,7 +183,7 @@ def main() -> None:
     # Issue #28 - Add a more descriptive report file name
     # TODO: Log when report generation begin/ends and update filename output.
     if generate_reports(
-        servicenow_id, election_name, domain_tested, output_directory, json_file_path
+        assessment_id, election_name, domain_tested, output_directory, json_file_path
     ):
         LOGGER.info("Report generated successfully.")
 
