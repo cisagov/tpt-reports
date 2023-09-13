@@ -140,8 +140,6 @@ def main() -> None:
                 error="Possible values for --log-level are "
                 + "debug, info, warning, error, and critical.",
             ),
-            # Issue #30 - Remove 3rd party reference from arguments
-            # TODO: Define a generic ID format to replace ASSESSMENT_ID and provide validation.
             # Issue #36 - Validate DOMAIN_TESTED argument inputs
             # TODO: Provide input validation for DOMAIN_TESTED.
             "ASSESSMENT_ID": Use(str, error="ASSESSMENT_ID must be a string."),
