@@ -321,7 +321,7 @@ def report_gen(tpt_info, payloads_list):
                     "Report Date": TODAYS_DATE,
                     "Stakeholder Name": [tpt_info["election_name"]],
                     "Domain Tested": [tpt_info["domain_tested"]],
-                    "Assessment ID": [tpt_info["servicenow_id"]],
+                    "Assessment ID": [tpt_info["assessment_id"]],
                 }
             ),
             table_header,
