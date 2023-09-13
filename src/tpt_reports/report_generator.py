@@ -32,6 +32,7 @@ from reportlab.platypus.doctemplate import (
 from reportlab.platypus.frames import Frame
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+TODAYS_DATE_FOR_FILE = datetime.today().strftime("%Y-%m-%d")
 TODAYS_DATE = datetime.today().strftime("%m/%d/%Y")
 REPORT_KEY_LENGTH = 17
 
@@ -218,7 +219,8 @@ def report_gen(tpt_info, payloads_list):
     # Issue #28 - Add a more descriptive report file name
     # TODO: Update the report file name to be more descriptive and specific.
     # Load the doc and create the frames for page structures to be dynamically filled
-    doc = MyDocTemplate(f"{tpt_info['output_directory']}/TPT_Report.pdf", report_key)
+    tpt_report_file_name = f"TPT_Report_{TODAYS_DATE_FOR_FILE}_{tpt_info['assessment_id']}.pdf"
+    doc = MyDocTemplate(f"{tpt_info['output_directory']}/{tpt_report_file_name}", report_key)
 
     # frame: x, y, width, height
     title_frame = Frame(
