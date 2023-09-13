@@ -9,7 +9,7 @@ Options:
                                     the specified value.  Valid values are "debug", "info",
                                     "warning", "error", and "critical". [default: info]
 Arguments:
-  ASSESSMENT_ID                     The assigned Assessment ID.
+  ASSESSMENT_ID                     The assessment identifier.
   ELECTION_NAME                     The name of the election being reported on.
   DOMAIN_TESTED                     The email domain used in the testing.
   JSON_FILE_PATH                    Path to the JSON file to act as a data source.
