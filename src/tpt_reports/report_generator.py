@@ -216,8 +216,6 @@ def report_gen(tpt_info, payloads_list):
     # Generate report key for encryption
     report_key = secrets.token_hex(REPORT_KEY_LENGTH)[:REPORT_KEY_LENGTH]
 
-    # Issue #28 - Add a more descriptive report file name
-    # TODO: Update the report file name to be more descriptive and specific.
     # Load the doc and create the frames for page structures to be dynamically filled
     tpt_report_filename = (
         f"TPT_Report_{TODAYS_DATE_FOR_FILE}_{tpt_info['assessment_id']}.pdf"
