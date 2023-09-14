@@ -32,9 +32,9 @@ from reportlab.platypus.doctemplate import (
 from reportlab.platypus.frames import Frame
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-TODAYS_DATE_FOR_FILE = datetime.today().strftime("%Y-%m-%d")
-TODAYS_DATE = datetime.today().strftime("%m/%d/%Y")
 REPORT_KEY_LENGTH = 17
+TODAYS_DATE_FOR_FILE_NAME = datetime.today().strftime("%Y-%m-%d")
+TODAYS_DATE_FOR_REPORT_CONTENT = datetime.today().strftime("%m/%d/%Y")
 
 # Set fonts to be used in the PDF
 pdfmetrics.registerFont(
@@ -191,7 +191,7 @@ def report_gen(tpt_info, payloads_list):
         canvas.drawString(
             1.08 * inch,
             1.5 * inch,
-            f"""Publication: {TODAYS_DATE}""",
+            f"""Publication: {TODAYS_DATE_FOR_REPORT_CONTENT}""",
         )
         canvas.drawString(
             1.08 * inch,
@@ -218,7 +218,7 @@ def report_gen(tpt_info, payloads_list):
 
     # Load the doc and create the frames for page structures to be dynamically filled
     tpt_report_filename = (
-        f"TPT_Report_{TODAYS_DATE_FOR_FILE}_{tpt_info['assessment_id']}.pdf"
+        f"TPT_Report_{TODAYS_DATE_FOR_FILE_NAME}_{tpt_info['assessment_id']}.pdf"
     )
     doc = MyDocTemplate(
         f"{tpt_info['output_directory']}/{tpt_report_filename}", report_key
@@ -322,7 +322,7 @@ def report_gen(tpt_info, payloads_list):
         format_table(
             pd.DataFrame.from_dict(
                 {
-                    "Report Date": TODAYS_DATE,
+                    "Report Date": TODAYS_DATE_FOR_REPORT_CONTENT,
                     "Stakeholder Name": [tpt_info["election_name"]],
                     "Domain Tested": [tpt_info["domain_tested"]],
                     "Assessment ID": [tpt_info["assessment_id"]],
