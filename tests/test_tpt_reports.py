@@ -111,7 +111,7 @@ def test_bad_log_level():
             tpt_reports.tpt_reports.main()
         except SystemExit as sys_exit:
             return_code = sys_exit.code
-        assert return_code == 1, "main() should exit with error"
+        assert return_code == 1, "main() should exit with error return code 1"
 
 
 def test_domain_validation():
