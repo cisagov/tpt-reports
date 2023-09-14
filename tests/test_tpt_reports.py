@@ -134,4 +134,4 @@ def test_domain_validation():
             tpt_reports.tpt_reports.main()
         except SystemExit as sys_exit:
             return_code = sys_exit.code
-            assert return_code == 2, "main() should return with error"
+            assert return_code == 2, "main() should return with error return code 2"
