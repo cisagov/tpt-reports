@@ -29,13 +29,14 @@ from typing import Any, Dict
 # Third-Party Libraries
 import docopt
 from schema import And, Schema, SchemaError, Use
+from validator_collection import validators
 
 from ._version import __version__
 from .report_generator import report_gen
 
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.StreamHandler())
-LOGGING_FILE = "report_generator.log"
+LOGGING_FILE = "tpt-reports.log"
 
 
 # Issue #20 - test load_json_file()
@@ -152,10 +153,16 @@ def main() -> None:
 
     try:
         validated_args: Dict[str, Any] = schema.validate(args)
+        validators.domain(validated_args["DOMAIN_TESTED"])
+
     except SchemaError as err:
         # Exit because one or more of the arguments were invalid
         print(err, file=sys.stderr)
         sys.exit(1)
+    except ValueError as err:
+        # Exit due to invalid value supplied
+        print(err, file=sys.stderr)
+        sys.exit(2)
 
     # Assign validated arguments to variables
     log_level: str = validated_args["--log-level"]
@@ -165,7 +172,7 @@ def main() -> None:
     output_directory: str = validated_args["OUTPUT_DIRECTORY"]
     json_file_path: str = validated_args["JSON_FILE_PATH"]
 
-    # Setup logging to central file
+    # Set up logging
     logging.basicConfig(
         filename=LOGGING_FILE,
         filemode="a",
@@ -182,8 +189,8 @@ def main() -> None:
     if not os.path.exists(validated_args["OUTPUT_DIRECTORY"]):
         os.mkdir(validated_args["OUTPUT_DIRECTORY"])
 
-    # Issue #28 - Add a more descriptive report file name
-    # TODO: Log when report generation begin/ends and update filename output.
+    # Issue #43 - Add a more descriptive logging message
+    # TODO: Update the log output to have a unique message per exeuction.
     if generate_reports(
         assessment_id, election_name, domain_tested, output_directory, json_file_path
     ):

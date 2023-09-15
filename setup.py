@@ -98,6 +98,7 @@ setup(
         "reportlab",
         "schema",
         "setuptools >= 24.2.0",
+        "validator-collection",
     ],
     extras_require={
         "test": [
