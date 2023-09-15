@@ -186,8 +186,6 @@ def main() -> None:
     if not os.path.exists(validated_args["OUTPUT_DIRECTORY"]):
         os.mkdir(validated_args["OUTPUT_DIRECTORY"])
 
-    # Issue #43 - Add a more descriptive logging message
-    # TODO: Update the log output to have a unique message per exeuction.
     if generate_reports(
         assessment_id, election_name, domain_tested, output_directory, json_file_path
     ):
