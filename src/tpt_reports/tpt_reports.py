@@ -36,6 +36,7 @@ from .report_generator import report_gen
 
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.StreamHandler())
+LOGGING_FILE = "tpt-reports.log"
 
 
 # Issue #20 - test load_json_file()
@@ -171,11 +172,13 @@ def main() -> None:
     output_directory: str = validated_args["OUTPUT_DIRECTORY"]
     json_file_path: str = validated_args["JSON_FILE_PATH"]
 
-    # Issue #40 - Add additional logging configuration
-    # TODO: Update basicConfig to append logs to an external file.
     # Set up logging
     logging.basicConfig(
-        format="%(asctime)-15s %(levelname)s %(message)s", level=log_level.upper()
+        datefmt="%m/%d/%Y %I:%M:%S",
+        filemode="a",
+        filename=LOGGING_FILE,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        level=log_level.upper(),
     )
 
     LOGGER.info("Loading TPT Report, Version : %s", __version__)
