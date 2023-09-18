@@ -174,10 +174,10 @@ def main() -> None:
 
     # Set up logging
     logging.basicConfig(
-        filename=LOGGING_FILE,
-        filemode="a",
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         datefmt="%m/%d/%Y %I:%M:%S",
+        filemode="a",
+        filename=LOGGING_FILE,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         level=log_level.upper(),
     )
 
