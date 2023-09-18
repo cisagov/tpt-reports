@@ -193,7 +193,7 @@ def main() -> None:
         assessment_id, election_name, domain_tested, output_directory, json_file_path
     ):
         LOGGER.info(
-            "TPT Report %s was generated successfully in %s.",
+            "TPT report %s was generated successfully in %s.",
             assessment_id,
             output_directory,
         )
