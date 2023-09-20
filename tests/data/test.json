@@ -1,0 +1,21 @@
+{
+  "asmt_id": "RV####.##",
+  "date_generated": "YYYY-M-DD",
+  "fiscal_year": 2023,
+  "payloads": [
+    {
+      "border_protection": "N",
+      "c2_protocol ": "c2_1",
+      "code_type": "test_code_type",
+      "command": "test_cmd",
+      "file_types": "test_file_type",
+      "filename": "",
+      "host_protection": "B",
+      "payload_description": "Test payload"
+    }
+  ],
+  "phishing_assessment_date": "YYYY-M-DD",
+  "security_solutions": [
+    ""
+  ]
+}
