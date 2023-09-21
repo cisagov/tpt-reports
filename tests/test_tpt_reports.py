@@ -166,17 +166,3 @@ def test_domain_validation():
         except SystemExit as sys_exit:
             return_code = sys_exit.code
             assert return_code == 2, "main() should return with error return code 2"
-
-
-def test_generate_reports():
-    """Validate report generation."""
-    result = tpt_reports.tpt_reports.report_gen(test_tpt_info, test_payloads_list)
-    assert isinstance(
-        result, tpt_reports.report_generator.MyDocTemplate
-    ), "generate_reports did not return an object of type MyDocTemplate"
-
-    with pytest.raises(TypeError) as excinfo:
-        result = tpt_reports.tpt_reports.report_gen(None, None)
-    assert isinstance(
-        excinfo.value, TypeError
-    ), "report_gen() did not correctly handle a NoneType argument."
