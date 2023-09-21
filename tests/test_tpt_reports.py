@@ -21,6 +21,37 @@ log_levels = (
     "critical",
 )
 
+test_tpt_info = {
+    "assessment_id": "test",
+    "domain_tested": "cisa.gov",
+    "election_name": "test",
+    "output_directory": "./test_output",
+    "payloads_meta": {
+        "border_blocked": 1,
+        "border_not_blocked": 1,
+        "host_blocked": 1,
+        "host_not_blocked": 1,
+        "num_payloads": 4,
+        "payloads_blocked": 2,
+        "payloads_not_blocked": 2,
+    },
+}
+
+test_payloads_list = [
+    {
+        "border_protection": "Blocked",
+        "C2_Protocol": "test_protocol",
+        "host_protection": "Not blocked",
+        "Payload": "test_payload_1",
+    },
+    {
+        "border_protection": "Not blocked",
+        "C2_Protocol": "test_protocol",
+        "host_protection": "Blocked",
+        "Payload": "test_payload_2",
+    },
+]
+
 # define sources of version strings
 RELEASE_TAG = os.getenv("RELEASE_TAG")
 PROJECT_VERSION = tpt_reports.__version__
@@ -135,3 +166,17 @@ def test_domain_validation():
         except SystemExit as sys_exit:
             return_code = sys_exit.code
             assert return_code == 2, "main() should return with error return code 2"
+
+
+def test_generate_reports():
+    """Validate report generation."""
+    result = tpt_reports.tpt_reports.report_gen(test_tpt_info, test_payloads_list)
+    assert isinstance(
+        result, tpt_reports.report_generator.MyDocTemplate
+    ), "generate_reports did not return an object of type MyDocTemplate"
+
+    with pytest.raises(TypeError) as excinfo:
+        result = tpt_reports.tpt_reports.report_gen(None, None)
+    assert isinstance(
+        excinfo.value, TypeError
+    ), "report_gen() did not correctly handle a NoneType argument."
