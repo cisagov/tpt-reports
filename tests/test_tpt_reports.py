@@ -139,5 +139,8 @@ def test_domain_validation():
 
 def test_load_json_file():
     """Validate file loads correctly."""
-    assert tpt_reports.tpt_reports.load_json_file("./tests/data/test.json") != None
-    assert tpt_reports.tpt_reports.load_json_file("./tests/data/does_not_exist.json") == None
+    assert tpt_reports.tpt_reports.load_json_file("./tests/data/test.json") is not None
+    assert (
+        tpt_reports.tpt_reports.load_json_file("./tests/data/does_not_exist.json")
+        is None
+    )
