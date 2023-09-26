@@ -143,10 +143,10 @@ def test_parse_json():
     payloads_meta = {}
     payload_list_test = [
         {
-            "Payload": "Test payload",
-            "C2 Protocol": "c2_1",
             "Border Protection": "Not Blocked",
+            "C2 Protocol": "c2_1",
             "Host Protection": "Blocked",
+            "Payload": "Test payload",
         }
     ]
     data = tpt_reports.tpt_reports.load_json_file("tests/data/test.json")
