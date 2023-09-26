@@ -27,6 +27,7 @@ bad_data = "./tests/data/bad_data.json"
 # define sources of version strings
 RELEASE_TAG = os.getenv("RELEASE_TAG")
 PROJECT_VERSION = tpt_reports.__version__
+TEST_JSON_FILE = "tests/data/test.json"
 
 
 def test_stdout_version(capsys):
@@ -179,3 +180,29 @@ def test_generate_reports_bad_types():
     assert isinstance(
         excinfo.value, TypeError
     ), "generate_reports() did not raise TypeError due to receiving a NoneType value."
+
+
+def test_parse_json():
+    """Validate parse_json() functionality."""
+    payloads_list = []
+    payloads_meta = {}
+    payload_list_test = [
+        {
+            "Border Protection": "Not Blocked",
+            "C2 Protocol": "c2_1",
+            "Host Protection": "Blocked",
+            "Payload": "Test payload",
+        }
+    ]
+    data = tpt_reports.tpt_reports.load_json_file(TEST_JSON_FILE)
+    payloads_meta, payloads_list = tpt_reports.tpt_reports.parse_json(data)
+
+    assert payloads_list == payload_list_test
+
+    assert payloads_meta["border_blocked"] == 0
+    assert payloads_meta["border_not_blocked"] == 1
+    assert payloads_meta["host_blocked"] == 1
+    assert payloads_meta["host_not_blocked"] == 0
+    assert payloads_meta["num_payloads"] == 1
+    assert payloads_meta["payloads_blocked"] == 1
+    assert payloads_meta["payloads_not_blocked"] == 1
