@@ -138,7 +138,7 @@ def test_domain_validation():
 
 
 def test_parse_json():
-    """Validate parse json functionality."""
+    """Validate parse_json() functionality."""
     payloads_list = []
     payloads_meta = {}
     payload_list_test = [
