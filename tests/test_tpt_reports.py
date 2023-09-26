@@ -144,3 +144,29 @@ def test_load_json_file():
     assert (
         tpt_reports.tpt_reports.load_json_file("tests/data/does_not_exist.json") is None
     )
+
+
+def test_parse_json():
+    """Validate parse_json() functionality."""
+    payloads_list = []
+    payloads_meta = {}
+    payload_list_test = [
+        {
+            "Border Protection": "Not Blocked",
+            "C2 Protocol": "c2_1",
+            "Host Protection": "Blocked",
+            "Payload": "Test payload",
+        }
+    ]
+    data = tpt_reports.tpt_reports.load_json_file(TEST_JSON_FILE)
+    payloads_meta, payloads_list = tpt_reports.tpt_reports.parse_json(data)
+
+    assert payloads_list == payload_list_test
+
+    assert payloads_meta["border_blocked"] == 0
+    assert payloads_meta["border_not_blocked"] == 1
+    assert payloads_meta["host_blocked"] == 1
+    assert payloads_meta["host_not_blocked"] == 0
+    assert payloads_meta["num_payloads"] == 1
+    assert payloads_meta["payloads_blocked"] == 1
+    assert payloads_meta["payloads_not_blocked"] == 1
