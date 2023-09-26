@@ -20,6 +20,9 @@ log_levels = (
     "error",
     "critical",
 )
+test_file = "./tests/data/test.json"
+bad_file = "./tests/data/bad_file.json"
+bad_data = "./tests/data/bad_data.json"
 
 # define sources of version strings
 RELEASE_TAG = os.getenv("RELEASE_TAG")
@@ -135,3 +138,44 @@ def test_domain_validation():
         except SystemExit as sys_exit:
             return_code = sys_exit.code
             assert return_code == 2, "main() should return with error return code 2"
+
+
+def test_generate_reports():
+    """Validate functionality for generate_reports()."""
+    return_val = tpt_reports.tpt_reports.generate_reports(
+        "test", "test", "cisa.gov", "./test_output", test_file
+    )
+    assert return_val is True, "generate_reports() failed to generate a report."
+
+
+def test_generate_reports_bad_filename():
+    """Validate that generate_reports returns False when it cannot open the json file."""
+    return_val = tpt_reports.tpt_reports.generate_reports(
+        "test", "test", "cisa.gov", "./test_output", bad_file
+    )
+    assert (
+        return_val is False
+    ), f"generate_reports() tried to open a non-existent file: {bad_file}."
+
+
+def test_generate_reports_bad_key_values():
+    """Validate that generate_reports() will raise KeyError when not receiving an expected key value."""
+    with pytest.raises(KeyError) as excinfo:
+        return_val = tpt_reports.tpt_reports.generate_reports(
+            "test", "test", "cisa.gov", "./test_output", bad_data
+        )
+        assert (
+            return_val is True
+        ), f"generate_reports() failed to open data file: {bad_data}."
+    assert isinstance(
+        excinfo.value, KeyError
+    ), "generate_reports() did not raise KeyError due to not receiving an expected key value."
+
+
+def test_generate_reports_bad_types():
+    """Validate that generate_reports() will raise TypeError when receiving NoneType values."""
+    with pytest.raises(TypeError) as excinfo:
+        tpt_reports.tpt_reports.generate_reports(None, None, None, None, None)
+    assert isinstance(
+        excinfo.value, TypeError
+    ), "generate_reports() did not raise TypeError due to receiving a NoneType value."
