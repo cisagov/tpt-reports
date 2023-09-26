@@ -34,6 +34,19 @@ def test_format_table(test_dataframe):
     table = report_generator.format_table(
         test_dataframe, header_style, column_widths, column_style_list
     )
+
     # Perform assertions to check the table's properties
     assert isinstance(test_dataframe, pd.DataFrame)
     assert isinstance(table, Table)
+
+    # Validate the number of rows and columns in the table
+    assert table._nrows == len(test_dataframe) + 1
+    assert table._ncols == len(test_dataframe.columns)
+
+    # Validate the attribute and content of the first row
+    assert table._cellvalues[0][0].text == "border_protection"
+    assert table._cellvalues[1][0].text == "N"
+
+    # Validate the attribute and content of the last row
+    assert table._cellvalues[0][7].text == "payload_description"
+    assert table._cellvalues[1][7].text == "Test payload"
