@@ -138,6 +138,14 @@ def test_domain_validation():
             assert return_code == 2, "main() should return with error return code 2"
 
 
+def test_load_json_file():
+    """Validate file loads correctly."""
+    assert tpt_reports.tpt_reports.load_json_file(TEST_JSON_FILE) is not None
+    assert (
+        tpt_reports.tpt_reports.load_json_file("tests/data/does_not_exist.json") is None
+    )
+
+
 def test_parse_json():
     """Validate parse_json() functionality."""
     payloads_list = []
