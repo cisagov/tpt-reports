@@ -24,6 +24,7 @@ log_levels = (
 # define sources of version strings
 RELEASE_TAG = os.getenv("RELEASE_TAG")
 PROJECT_VERSION = tpt_reports.__version__
+TEST_JSON_FILE = "tests/data/test.json"
 
 
 def test_stdout_version(capsys):
@@ -149,7 +150,7 @@ def test_parse_json():
             "Payload": "Test payload",
         }
     ]
-    data = tpt_reports.tpt_reports.load_json_file("tests/data/test.json")
+    data = tpt_reports.tpt_reports.load_json_file(TEST_JSON_FILE)
     payloads_meta, payloads_list = tpt_reports.tpt_reports.parse_json(data)
 
     assert payloads_list == payload_list_test
