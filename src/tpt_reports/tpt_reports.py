@@ -17,7 +17,6 @@ Arguments:
   DOMAIN_TESTED                     The email domain used in the testing.
   JSON_FILE_PATH                    Path to the JSON file to act as a data source.
 
-
 """
 
 
@@ -132,7 +131,6 @@ def generate_reports(
 
 def main() -> None:
     """Load JSON File from supplied argument."""
-    print(sys.argv)
     args: Dict[str, str] = docopt.docopt(__doc__, version=__version__)
     # Validate and convert arguments as needed
     schema: Schema = Schema(
@@ -187,8 +185,6 @@ def main() -> None:
     LOGGER.info("Loading TPT Report, Version : %s", __version__)
 
     # Check if output directory exists and create if needed
-    # output_directory = validated_args.get("OUTPUT_DIRECTORY", "~/")
-    print(output_directory)
     if not os.path.exists(output_directory):
         os.mkdir(output_directory)
 
