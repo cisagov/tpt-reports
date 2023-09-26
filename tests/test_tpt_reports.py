@@ -142,6 +142,5 @@ def test_load_json_file():
     """Validate file loads correctly."""
     assert tpt_reports.tpt_reports.load_json_file(TEST_JSON_FILE) is not None
     assert (
-        tpt_reports.tpt_reports.load_json_file("tests/data/does_not_exist.json")
-        is None
+        tpt_reports.tpt_reports.load_json_file("tests/data/does_not_exist.json") is None
     )
