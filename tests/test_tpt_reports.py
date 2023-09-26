@@ -24,6 +24,7 @@ log_levels = (
 # define sources of version strings
 RELEASE_TAG = os.getenv("RELEASE_TAG")
 PROJECT_VERSION = tpt_reports.__version__
+TEST_JSON_FILE = "tests/data/test.json"
 
 
 def test_stdout_version(capsys):
@@ -139,8 +140,8 @@ def test_domain_validation():
 
 def test_load_json_file():
     """Validate file loads correctly."""
-    assert tpt_reports.tpt_reports.load_json_file("./tests/data/test.json") is not None
+    assert tpt_reports.tpt_reports.load_json_file(TEST_JSON_FILE) is not None
     assert (
-        tpt_reports.tpt_reports.load_json_file("./tests/data/does_not_exist.json")
+        tpt_reports.tpt_reports.load_json_file("tests/data/does_not_exist.json")
         is None
     )
