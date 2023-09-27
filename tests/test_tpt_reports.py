@@ -180,6 +180,8 @@ def test_generate_reports_bad_types():
     assert isinstance(
         excinfo.value, TypeError
     ), "generate_reports() did not raise TypeError due to receiving a NoneType value."
+
+
 def test_load_json_file():
     """Validate file loads correctly."""
     assert tpt_reports.tpt_reports.load_json_file(TEST_JSON_FILE) is not None
