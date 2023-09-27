@@ -15,14 +15,14 @@ from tpt_reports import report_generator
 
 
 @pytest.fixture
-def test_dataframe():
-    """Define a fixture for a sample DataFrame."""
+def test_payloads_dataframe():
+    """Define a fixture for the payloads DataFrame."""
     with open("tests/data/test.json", encoding="utf-8") as file:
         data = json.load(file)
         return pd.DataFrame.from_dict(data["payloads"])
 
 
-def test_format_table(test_dataframe):
+def test_format_table(test_payloads_dataframe):
     """Verify that format_table works correctly."""
     # Define test parameters
     header_style = ParagraphStyle(name="test_table", fontSize=12)
@@ -32,17 +32,17 @@ def test_format_table(test_dataframe):
 
     # Call the format_table function with test data
     table = report_generator.format_table(
-        test_dataframe, header_style, column_widths, column_style_list
+        test_payloads_dataframe, header_style, column_widths, column_style_list
     )
 
     # Perform assertions to check the table's properties
-    assert isinstance(test_dataframe, pd.DataFrame)
+    assert isinstance(test_payloads_dataframe, pd.DataFrame)
     assert isinstance(table, Table)
 
     # Validate the number of rows and columns in the table
     # The table value includes the header row so + 1 is needed
-    assert table._nrows == len(test_dataframe) + 1
-    assert table._ncols == len(test_dataframe.columns)
+    assert table._nrows == len(test_payloads_dataframe) + 1
+    assert table._ncols == len(test_payloads_dataframe.columns)
 
     # Validate the attribute and content of the first row
     assert table._cellvalues[0][0].text == "border_protection"
