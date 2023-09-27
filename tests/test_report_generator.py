@@ -40,6 +40,7 @@ def test_format_table(test_dataframe):
     assert isinstance(table, Table)
 
     # Validate the number of rows and columns in the table
+    # The table value includes the header row so + 1 is needed
     assert table._nrows == len(test_dataframe) + 1
     assert table._ncols == len(test_dataframe.columns)
 
