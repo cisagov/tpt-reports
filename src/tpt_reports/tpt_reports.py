@@ -142,13 +142,13 @@ def main() -> None:
                 error="Possible values for --log-level are "
                 + "debug, info, warning, error, and critical.",
             ),
+            "--output-dir": Use(str, error="--output-dir must be a string."),
+            "ASSESSMENT_ID": Use(str, error="ASSESSMENT_ID must be a string."),
             # Issue #36 - Validate DOMAIN_TESTED argument inputs
             # TODO: Provide input validation for DOMAIN_TESTED.
-            "ASSESSMENT_ID": Use(str, error="ASSESSMENT_ID must be a string."),
-            "ELECTION_NAME": Use(str, error="ELECTION_NAME must be a string."),
             "DOMAIN_TESTED": Use(str, error="DOMAIN_TESTED must be a string."),
+            "ELECTION_NAME": Use(str, error="ELECTION_NAME must be a string."),
             "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be a string."),
-            "--output-dir": Use(str, error="--output-dir must be a string."),
         }
     )
 
@@ -166,12 +166,12 @@ def main() -> None:
         sys.exit(2)
 
     # Assign validated arguments to variables
-    log_level: str = validated_args["--log-level"]
     assessment_id: str = validated_args["ASSESSMENT_ID"]
-    election_name: str = validated_args["ELECTION_NAME"]
     domain_tested: str = validated_args["DOMAIN_TESTED"]
-    output_directory: str = validated_args["--output-dir"]
+    election_name: str = validated_args["ELECTION_NAME"]
     json_file_path: str = validated_args["JSON_FILE_PATH"]
+    log_level: str = validated_args["--log-level"]
+    output_directory: str = validated_args["--output-dir"]
 
     # Set up logging
     logging.basicConfig(
