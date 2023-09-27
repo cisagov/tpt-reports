@@ -17,5 +17,20 @@
   "phishing_assessment_date": "YYYY-M-DD",
   "security_solutions": [
     ""
-  ]
+  ],
+  "tpt_info": {
+    "assessment_id": "test",
+    "domain_tested": "cisa.gov",
+    "election_name": "test",
+    "output_directory": "./test_output",
+    "payloads_meta": {
+        "border_blocked": 1,
+        "border_not_blocked": 1,
+        "host_blocked": 1,
+        "host_not_blocked": 1,
+        "num_payloads": 4,
+        "payloads_blocked": 2,
+        "payloads_not_blocked": 2
+    }
+  }
 }
