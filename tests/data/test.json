@@ -24,13 +24,13 @@
     "election_name": "test",
     "output_directory": "./test_output",
     "payloads_meta": {
-        "border_blocked": 1,
-        "border_not_blocked": 1,
-        "host_blocked": 1,
-        "host_not_blocked": 1,
-        "num_payloads": 4,
-        "payloads_blocked": 2,
-        "payloads_not_blocked": 2
+      "border_blocked": 1,
+      "border_not_blocked": 1,
+      "host_blocked": 1,
+      "host_not_blocked": 1,
+      "num_payloads": 4,
+      "payloads_blocked": 2,
+      "payloads_not_blocked": 2
     }
   }
 }
