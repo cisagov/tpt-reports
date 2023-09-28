@@ -89,8 +89,6 @@ def get_image(path, width=1 * inch):
     return Image(path, width=width, height=(width * aspect))
 
 
-# Issue #25 - test format_table()
-# TODO: Add unit tests for following logic and remove this comment.
 def format_table(df, header_style, column_widths, column_style_list):
     """Read in a dataframe and convert it to a table and format it with a provided style list."""
     header_row = [
