@@ -29,7 +29,7 @@ Options:
                                     "warning", "error", and "critical". [default: info]
   --output-dir=OUTPUT_DIRECTORY     The directory where the final PDF reports
                                     should be saved. [default: ~/]
-                         
+
 Arguments:
   ASSESSMENT_ID                     The assessment identifier.
   ELECTION_NAME                     The name of the election being reported on.
