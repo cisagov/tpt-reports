@@ -4,6 +4,7 @@
 # Standard Python Libraries
 import logging
 import os
+from re import A
 import sys
 from unittest.mock import patch
 
@@ -25,9 +26,11 @@ log_levels = (
 RELEASE_TAG = os.getenv("RELEASE_TAG")
 PROJECT_VERSION = tpt_reports.__version__
 TEST_JSON_FILE = "tests/data/test.json"
+DEFAULT_OUTPUT_DIRECTORY = "~/"
 
 
-def test_stdout_version(capsys):
+@patch("tpt_reports.tpt_reports.generate_reports")
+def test_stdout_version(mock_generate_reports, capsys):
     """Verify that version string sent to stdout agrees with the module version."""
     with pytest.raises(SystemExit):
         with patch.object(sys, "argv", ["bogus", "--version"]):
@@ -66,7 +69,8 @@ def test_release_version():
 
 
 @pytest.mark.parametrize("level", log_levels)
-def test_log_levels(level):
+@patch("tpt_reports.tpt_reports.generate_reports")
+def test_log_levels(mock_generate_reports, level):
     """Validate commandline log-level arguments."""
     with patch.object(
         sys,
@@ -77,8 +81,8 @@ def test_log_levels(level):
             "test",
             "test",
             "cisa.gov",
-            "test.json",
-            "./test_output",
+            TEST_JSON_FILE,
+            "--output-dir=./test_output",
         ],
     ):
         with patch.object(logging.root, "handlers", []):
@@ -100,12 +104,13 @@ def test_log_levels(level):
             assert return_code is None, "main() should return success"
 
 
-def test_bad_log_level():
+@patch("tpt_reports.tpt_reports.generate_reports")
+def test_bad_log_level(mock_generate_reports):
     """Validate bad log-level argument returns error."""
     with patch.object(
         sys,
         "argv",
-        ["bogus", "--log-level=emergency", "test", "test", "test", "test", "test"],
+        ["bogus", "--log-level=emergency", "test", "test", "test", TEST_JSON_FILE],
     ):
         return_code = None
         try:
@@ -115,7 +120,8 @@ def test_bad_log_level():
         assert return_code == 1, "main() should exit with error return code 1"
 
 
-def test_domain_validation():
+@patch("tpt_reports.tpt_reports.generate_reports")
+def test_domain_validation(mock_generate_reports):
     """Validate invalid domain arguments."""
     with patch.object(
         sys,
@@ -126,8 +132,8 @@ def test_domain_validation():
             "test",
             "test",
             "cisa",
-            "test.json",
-            "./test_output",
+            TEST_JSON_FILE,
+            "--output-dir=./test_output",
         ],
     ):
         return_code = None
@@ -170,3 +176,69 @@ def test_parse_json():
     assert payloads_meta["num_payloads"] == 1
     assert payloads_meta["payloads_blocked"] == 1
     assert payloads_meta["payloads_not_blocked"] == 1
+
+
+@patch("tpt_reports.tpt_reports.generate_reports")
+def test_no_output_directory(mock_generate_reports):
+    """Validate that no output directory argument uses default."""
+    patched_args = [
+        "bogus",
+        "--log-level=info",
+        "test",
+        "test",
+        "test",
+        TEST_JSON_FILE,
+    ]
+
+    # Patch usage arguments
+    with patch.object(sys, "argv", patched_args):
+        # Set mock return value
+        mock_generate_reports.return_value = True
+        
+        # Call tpt_reports.main entry poifunction
+        result = tpt_reports.tpt_reports.main()
+
+        # Confirm generate_reports was called once with expected arguments
+        expected_call_args = (
+            'test',
+            'test',
+            'test',
+            DEFAULT_OUTPUT_DIRECTORY,
+            TEST_JSON_FILE
+        )
+        assert mock_generate_reports.call_count == 1
+        assert mock_generate_reports.call_args[0] == expected_call_args
+ 
+
+@patch("tpt_reports.tpt_reports.generate_reports")
+def test_with_output_directory(mock_generate_reports):
+    """Validate that when output directory is passed it overrides default."""
+    patched_args = [
+        "bogus",
+        "--log-level=info",
+        "test",
+        "test",
+        "test",
+        TEST_JSON_FILE,
+        "--output-dir=./"
+    ]
+    
+    # Patch usage arguments
+    with patch.object(sys, "argv", patched_args):
+        # Set mock return value
+        mock_generate_reports.return_value = True
+        
+        # Call tpt_reports.main entry poifunction
+        result = tpt_reports.tpt_reports.main()
+ 
+        # Confirm generate_reports was called with expected parameters
+        expected_call_args = (
+            'test',
+            'test',
+            'test',
+            './',
+            TEST_JSON_FILE
+        )
+        assert mock_generate_reports.call_count == 1
+        assert mock_generate_reports.call_args[0] == expected_call_args
+ 
