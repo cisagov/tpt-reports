@@ -14,6 +14,14 @@
       "payload_description": "Test payload"
     }
   ],
+  "payloads_clean": [
+    {
+      "Border Protection": "Not Blocked",
+      "C2 Protocol": "c2_1",
+      "Host Protection": "Blocked",
+      "Payload": "Test payload"
+    }
+  ],
   "phishing_assessment_date": "YYYY-M-DD",
   "security_solutions": [
     ""
