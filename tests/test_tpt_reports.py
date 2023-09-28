@@ -4,7 +4,6 @@
 # Standard Python Libraries
 import logging
 import os
-from re import A
 import sys
 from unittest.mock import patch
 
@@ -194,21 +193,22 @@ def test_no_output_directory(mock_generate_reports):
     with patch.object(sys, "argv", patched_args):
         # Set mock return value
         mock_generate_reports.return_value = True
-        
+
         # Call tpt_reports.main entry poifunction
         result = tpt_reports.tpt_reports.main()
+        assert result is None
 
         # Confirm generate_reports was called once with expected arguments
         expected_call_args = (
-            'test',
-            'test',
-            'test',
+            "test",
+            "test",
+            "test",
             DEFAULT_OUTPUT_DIRECTORY,
-            TEST_JSON_FILE
+            TEST_JSON_FILE,
         )
         assert mock_generate_reports.call_count == 1
         assert mock_generate_reports.call_args[0] == expected_call_args
- 
+
 
 @patch("tpt_reports.tpt_reports.generate_reports")
 def test_with_output_directory(mock_generate_reports):
@@ -220,25 +220,19 @@ def test_with_output_directory(mock_generate_reports):
         "test",
         "test",
         TEST_JSON_FILE,
-        "--output-dir=./"
+        "--output-dir=./",
     ]
-    
+
     # Patch usage arguments
     with patch.object(sys, "argv", patched_args):
         # Set mock return value
         mock_generate_reports.return_value = True
-        
+
         # Call tpt_reports.main entry poifunction
         result = tpt_reports.tpt_reports.main()
- 
+        assert result is None
+
         # Confirm generate_reports was called with expected parameters
-        expected_call_args = (
-            'test',
-            'test',
-            'test',
-            './',
-            TEST_JSON_FILE
-        )
+        expected_call_args = ("test", "test", "test", "./", TEST_JSON_FILE)
         assert mock_generate_reports.call_count == 1
         assert mock_generate_reports.call_args[0] == expected_call_args
- 
