@@ -194,7 +194,7 @@ def test_no_output_directory(mock_generate_reports):
         # Set mock return value
         mock_generate_reports.return_value = True
 
-        # Call tpt_reports.main entry poifunction
+        # Call tpt_reports.main entry point function
         result = tpt_reports.tpt_reports.main()
         assert result is None
 
