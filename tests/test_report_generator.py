@@ -28,7 +28,7 @@ def test_payloads_dataframe():
 
 @pytest.fixture
 def test_dictionary():
-    """Define a fixture for the test json dictionary."""
+    """Define a fixture for the test JSON dictionary."""
     with open(os.path.join(FILE_PATH, "test.json"), encoding="utf-8") as file:
         return json.load(file)
 
