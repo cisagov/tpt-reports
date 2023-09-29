@@ -1,7 +1,7 @@
 """cisagov/tpt-reports: A tool for creating Technical Phishing Test (TPT) reports.
 
 Usage:
-  tpt-reports ASSESSMENT_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH [--output-dir=OUTPUT_DIRECTORY] [--log-level=LEVEL]
+  tpt-reports ASSESSMENT_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH [--log-level=LEVEL] [--output-dir=OUTPUT_DIRECTORY]
 
 Options:
   -h --help                         Show this message.
