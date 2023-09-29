@@ -20,7 +20,7 @@ The package collects raw data and creates an encrypted PDF.
 
 ```console
 Usage:
-  tpt-reports ASSESSMENT_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH OUTPUT_DIRECTORY [--log-level=LEVEL]
+  tpt-reports ASSESSMENT_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH [--log-level=LEVEL] [--output-dir=OUTPUT_DIRECTORY]
 
 Options:
   -h --help                         Show this message.
