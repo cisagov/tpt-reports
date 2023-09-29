@@ -30,7 +30,7 @@
     "assessment_id": "test",
     "domain_tested": "cisa.gov",
     "election_name": "test",
-    "output_directory": "./tests/data",
+    "output_directory": "tests/data",
     "payloads_meta": {
       "border_blocked": 1,
       "border_not_blocked": 1,

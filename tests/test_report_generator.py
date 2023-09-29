@@ -15,13 +15,12 @@ from reportlab.platypus import Table
 # cisagov Libraries
 from tpt_reports import report_generator
 
-FILE_PATH = "./tests/data"
-
+TEST_JSON_FILE = "tests/data/test.json"
 
 @pytest.fixture
 def test_payloads_dataframe():
     """Define a fixture for the payloads DataFrame."""
-    with open(os.path.join(FILE_PATH, "test.json"), encoding="utf-8") as file:
+    with open(TEST_JSON_FILE, encoding="utf-8") as file:
         data = json.load(file)
         return pd.DataFrame.from_dict(data["payloads"])
 
@@ -29,7 +28,7 @@ def test_payloads_dataframe():
 @pytest.fixture
 def test_dictionary():
     """Define a fixture for the test json dictionary."""
-    with open(os.path.join(FILE_PATH, "test.json"), encoding="utf-8") as file:
+    with open(TEST_JSON_FILE, encoding="utf-8") as file:
         return json.load(file)
 
 
@@ -37,8 +36,8 @@ def test_dictionary():
 def output_file_path(request):
     """Define a fixture for the output file path."""
     new_file_name = f"TPT_Report_{datetime.today().strftime('%Y-%m-%d')}_test.pdf"
-    original_file_path = os.path.join(FILE_PATH, "test.pdf")
-    new_file_path = os.path.join(FILE_PATH, new_file_name)
+    original_file_path = "tests/data/test.pdf"
+    new_file_path = os.path.join("tests/data", new_file_name)
 
     def fin():
         """Define a finalizer to revert the file name back."""
