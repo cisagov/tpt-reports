@@ -3,6 +3,7 @@
 # Standard Python Libraries
 from datetime import datetime
 import json
+import os
 
 # Third-Party Libraries
 import pandas as pd
@@ -14,11 +15,13 @@ from reportlab.platypus import Table
 # cisagov Libraries
 from tpt_reports import report_generator
 
+FILE_PATH = "./tests/data"
+
 
 @pytest.fixture
 def test_payloads_dataframe():
     """Define a fixture for the payloads DataFrame."""
-    with open("tests/data/test.json", encoding="utf-8") as file:
+    with open(os.path.join(FILE_PATH, "test.json"), encoding="utf-8") as file:
         data = json.load(file)
         return pd.DataFrame.from_dict(data["payloads"])
 
@@ -26,8 +29,23 @@ def test_payloads_dataframe():
 @pytest.fixture
 def test_dictionary():
     """Define a fixture for the test json dictionary."""
-    with open("tests/data/test.json", encoding="utf-8") as file:
+    with open(os.path.join(FILE_PATH, "test.json"), encoding="utf-8") as file:
         return json.load(file)
+
+
+@pytest.fixture
+def output_file_path(request):
+    """Define a fixture for the output file path."""
+    new_file_name = f"TPT_Report_{datetime.today().strftime('%Y-%m-%d')}_test.pdf"
+    original_file_path = os.path.join(FILE_PATH, "test.pdf")
+    new_file_path = os.path.join(FILE_PATH, new_file_name)
+
+    def fin():
+        """Define a finalizer to revert the file name back."""
+        os.rename(new_file_path, original_file_path)
+
+    request.addfinalizer(fin)  # Register the finalizer
+    return new_file_path
 
 
 def test_format_table(test_payloads_dataframe):
@@ -61,19 +79,17 @@ def test_format_table(test_payloads_dataframe):
     assert table._cellvalues[1][7].text == "Test payload"
 
 
-def test_report_gen(test_dictionary):
+def test_report_gen(test_dictionary, output_file_path):
     """Validate report document is generated."""
     result = report_generator.report_gen(
         test_dictionary["tpt_info"], test_dictionary["payloads_clean"]
     )
-    todays_date = datetime.today().strftime("%Y-%m-%d")
-    file_output = f"./test_output/TPT_Report_{todays_date}_test.pdf"
 
     # Check that result is an instance of MyDocTemplate
     assert isinstance(result, report_generator.MyDocTemplate)
 
     # Validate the file name output of result
-    assert result.filename == file_output
+    assert result.filename == output_file_path
 
     # Validate the page size of result
     assert result.pagesize == (612.0, 792.0)
