@@ -14,8 +14,31 @@
       "payload_description": "Test payload"
     }
   ],
+  "payloads_clean": [
+    {
+      "Border Protection": "Not Blocked",
+      "C2 Protocol": "c2_1",
+      "Host Protection": "Blocked",
+      "Payload": "Test payload"
+    }
+  ],
   "phishing_assessment_date": "YYYY-M-DD",
   "security_solutions": [
     ""
-  ]
+  ],
+  "tpt_info": {
+    "assessment_id": "test",
+    "domain_tested": "cisa.gov",
+    "election_name": "test",
+    "output_directory": "tests/data",
+    "payloads_meta": {
+      "border_blocked": 1,
+      "border_not_blocked": 1,
+      "host_blocked": 1,
+      "host_not_blocked": 1,
+      "num_payloads": 4,
+      "payloads_blocked": 2,
+      "payloads_not_blocked": 2
+    }
+  }
 }
