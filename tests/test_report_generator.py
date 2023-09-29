@@ -17,6 +17,7 @@ from tpt_reports import report_generator
 
 TEST_JSON_FILE = "tests/data/test.json"
 
+
 @pytest.fixture
 def test_payloads_dataframe():
     """Define a fixture for the payloads DataFrame."""
