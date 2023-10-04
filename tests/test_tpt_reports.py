@@ -20,8 +20,6 @@ log_levels = (
     "error",
     "critical",
 )
-test_file = "./tests/data/test.json"
-bad_data = "./tests/data/bad_data.json"
 
 # define sources of version strings
 RELEASE_TAG = os.getenv("RELEASE_TAG")
