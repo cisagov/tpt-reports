@@ -1,20 +1,21 @@
 """cisagov/tpt-reports: A tool for creating Technical Phishing Test (TPT) reports.
 
 Usage:
-  tpt-reports ASSESSMENT_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH OUTPUT_DIRECTORY [--log-level=LEVEL]
+  tpt-reports ASSESSMENT_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH [--log-level=LEVEL] [--output-dir=OUTPUT_DIRECTORY]
 
 Options:
   -h --help                         Show this message.
   -l --log-level=LEVEL              If specified, then the log level will be set to
                                     the specified value.  Valid values are "debug", "info",
                                     "warning", "error", and "critical". [default: info]
+  -o --output-dir=OUTPUT_DIRECTORY  The directory where the final PDF reports
+                                    should be saved. [default: ~/]
+
 Arguments:
   ASSESSMENT_ID                     The assessment identifier.
   ELECTION_NAME                     The name of the election being reported on.
   DOMAIN_TESTED                     The email domain used in the testing.
   JSON_FILE_PATH                    Path to the JSON file to act as a data source.
-  OUTPUT_DIRECTORY                  The directory where the final PDF
-                                    reports should be saved.
 
 """
 
@@ -147,13 +148,13 @@ def main() -> None:
                 error="Possible values for --log-level are "
                 + "debug, info, warning, error, and critical.",
             ),
+            "--output-dir": Use(str, error="--output-dir must be a string."),
+            "ASSESSMENT_ID": Use(str, error="ASSESSMENT_ID must be a string."),
             # Issue #36 - Validate DOMAIN_TESTED argument inputs
             # TODO: Provide input validation for DOMAIN_TESTED.
-            "ASSESSMENT_ID": Use(str, error="ASSESSMENT_ID must be a string."),
-            "ELECTION_NAME": Use(str, error="ELECTION_NAME must be a string."),
             "DOMAIN_TESTED": Use(str, error="DOMAIN_TESTED must be a string."),
+            "ELECTION_NAME": Use(str, error="ELECTION_NAME must be a string."),
             "JSON_FILE_PATH": Use(str, error="JSON_FILE_PATH must be a string."),
-            "OUTPUT_DIRECTORY": Use(str, error="OUTPUT_DIRECTORY must be a string."),
         }
     )
 
@@ -171,12 +172,12 @@ def main() -> None:
         sys.exit(2)
 
     # Assign validated arguments to variables
-    log_level: str = validated_args["--log-level"]
     assessment_id: str = validated_args["ASSESSMENT_ID"]
-    election_name: str = validated_args["ELECTION_NAME"]
     domain_tested: str = validated_args["DOMAIN_TESTED"]
-    output_directory: str = validated_args["OUTPUT_DIRECTORY"]
+    election_name: str = validated_args["ELECTION_NAME"]
     json_file_path: str = validated_args["JSON_FILE_PATH"]
+    log_level: str = validated_args["--log-level"]
+    output_directory: str = validated_args["--output-dir"]
 
     # Set up logging
     logging.basicConfig(
@@ -189,11 +190,9 @@ def main() -> None:
 
     LOGGER.info("Loading TPT Report, Version : %s", __version__)
 
-    # Issue #27 - Input and output file directories change
-    # TODO: Validate that the output_directory is not in the repo.
-    # Create output directory
-    if not os.path.exists(validated_args["OUTPUT_DIRECTORY"]):
-        os.mkdir(validated_args["OUTPUT_DIRECTORY"])
+    # Check if output directory exists and create if needed
+    if not os.path.exists(output_directory):
+        os.mkdir(output_directory)
 
     if generate_reports(
         assessment_id, election_name, domain_tested, output_directory, json_file_path
