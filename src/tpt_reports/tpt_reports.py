@@ -117,15 +117,21 @@ def generate_reports(
     tpt_info["election_name"] = election_name
     tpt_info["output_directory"] = output_directory
     tpt_info["assessment_id"] = assessment_id
+
     data = load_json_file(json_file_path)
+    report_status = False
     if data:
         tpt_info["payloads_meta"], payloads_list = parse_json(data)
-        logging.debug(tpt_info)
-        logging.debug(payloads_list)
-        report_gen(tpt_info, payloads_list)
-        return True
-    else:
-        return False
+        if (
+            bool(tpt_info["payloads_meta"]) is not False
+            and bool(payloads_list) is not False
+        ):
+            logging.debug(tpt_info)
+            logging.debug(payloads_list)
+            report_gen(tpt_info, payloads_list)
+            report_status = True
+
+    return report_status
 
 
 def main() -> None:

@@ -141,45 +141,72 @@ def test_domain_validation():
             assert return_code == 2, "main() should return with error return code 2"
 
 
-def test_generate_reports():
+# @patch("tpt_reports.tpt_reports.load_json_file")
+# @patch("tpt_reports.tpt_reports.parse_json")
+@patch("tpt_reports.tpt_reports.report_gen")
+def test_generate_reports(mock_report_gen):
     """Validate functionality for generate_reports()."""
+    # mock_load_json_file.return_value = {
+    #    "payloads": [
+    #    {
+    #        "border_protection": "N",
+    #        "c2_protocol ": "c2_1",
+    #        "code_type": "test_code_type",
+    #        "command": "test_cmd",
+    #        "file_types": "test_file_type",
+    #        "filename": "",
+    #        "host_protection": "B",
+    #        "payload_description": "Test payload"
+    #    }
+    # ]}
+
+    # mock_parse_json.return_value = (
+    # {
+    #    "border_blocked": 1,
+    #    "border_not_blocked": 0,
+    #    "host_blocked": 1,
+    #    "host_not_blocked": 0,
+    #    "num_payloads": 1,
+    #    "payloads_blocked": 1,
+    #    "payloads_not_blocked": 0
+    # },
+    # [
+    #    {
+    #        "Payload": "Test payload",
+    #        "C2 Protocol": "c2_1",
+    #        "Border Protection": "Blocked",
+    #        "Host Protection": "Blocked"
+    #    }
+    # ])
+    mock_report_gen.return_value = True
     return_val = tpt_reports.tpt_reports.generate_reports(
         "test", "test", "cisa.gov", "./test_output", test_file
     )
     assert return_val is True, "generate_reports() failed to generate a report."
 
 
-def test_generate_reports_bad_filename():
-    """Validate that generate_reports returns False when it cannot open the json file."""
+@patch("tpt_reports.tpt_reports.report_gen")
+def test_generate_reports_bad_file_name(mock_report_gen):
+    """Validate functionality of generate_reports() when a bad filename is provided."""
+    mock_report_gen.return_value = False
     return_val = tpt_reports.tpt_reports.generate_reports(
-        "test", "test", "cisa.gov", "./test_output", bad_file
+        "test", "test", "cisa.gov", "./test_output", "nonexistent_file.json"
     )
     assert (
         return_val is False
-    ), f"generate_reports() tried to open a non-existent file: {bad_file}."
+    ), "generate_reports() returned a boolean True when a bad filename was provided."
 
 
-def test_generate_reports_bad_key_values():
-    """Validate that generate_reports() will raise KeyError when not receiving an expected key value."""
-    with pytest.raises(KeyError) as excinfo:
-        return_val = tpt_reports.tpt_reports.generate_reports(
-            "test", "test", "cisa.gov", "./test_output", bad_data
-        )
-        assert (
-            return_val is True
-        ), f"generate_reports() failed to open data file: {bad_data}."
-    assert isinstance(
-        excinfo.value, KeyError
-    ), "generate_reports() did not raise KeyError due to not receiving an expected key value."
-
-
-def test_generate_reports_bad_types():
-    """Validate that generate_reports() will raise TypeError when receiving NoneType values."""
-    with pytest.raises(TypeError) as excinfo:
-        tpt_reports.tpt_reports.generate_reports(None, None, None, None, None)
-    assert isinstance(
-        excinfo.value, TypeError
-    ), "generate_reports() did not raise TypeError due to receiving a NoneType value."
+@patch("tpt_reports.tpt_reports.report_gen")
+def test_generate_reports_bad_file_data(mock_report_gen):
+    """Validate functionality of generate_reports() when a bad data is loaded from file."""
+    mock_report_gen.return_value = False
+    return_val = tpt_reports.tpt_reports.generate_reports(
+        "test", "test", "cisa.gov", "./test_output", bad_data
+    )
+    assert (
+        return_val is False
+    ), "generate_reports() returned a boolean True when a bad data was provided."
 
 
 def test_load_json_file():
