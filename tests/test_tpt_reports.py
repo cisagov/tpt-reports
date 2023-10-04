@@ -27,6 +27,7 @@ bad_data = "./tests/data/bad_data.json"
 RELEASE_TAG = os.getenv("RELEASE_TAG")
 PROJECT_VERSION = tpt_reports.__version__
 TEST_JSON_FILE = "tests/data/test.json"
+TEST_BAD_JSON_FILE = "tests/data/bad_file.json"
 DEFAULT_OUTPUT_DIRECTORY = "~/"
 
 
@@ -145,46 +146,12 @@ def test_domain_validation(mock_generate_reports):
             assert return_code == 2, "main() should return with error return code 2"
 
 
-# @patch("tpt_reports.tpt_reports.load_json_file")
-# @patch("tpt_reports.tpt_reports.parse_json")
 @patch("tpt_reports.tpt_reports.report_gen")
 def test_generate_reports(mock_report_gen):
     """Validate functionality for generate_reports()."""
-    # mock_load_json_file.return_value = {
-    #    "payloads": [
-    #    {
-    #        "border_protection": "N",
-    #        "c2_protocol ": "c2_1",
-    #        "code_type": "test_code_type",
-    #        "command": "test_cmd",
-    #        "file_types": "test_file_type",
-    #        "filename": "",
-    #        "host_protection": "B",
-    #        "payload_description": "Test payload"
-    #    }
-    # ]}
-
-    # mock_parse_json.return_value = (
-    # {
-    #    "border_blocked": 1,
-    #    "border_not_blocked": 0,
-    #    "host_blocked": 1,
-    #    "host_not_blocked": 0,
-    #    "num_payloads": 1,
-    #    "payloads_blocked": 1,
-    #    "payloads_not_blocked": 0
-    # },
-    # [
-    #    {
-    #        "Payload": "Test payload",
-    #        "C2 Protocol": "c2_1",
-    #        "Border Protection": "Blocked",
-    #        "Host Protection": "Blocked"
-    #    }
-    # ])
     mock_report_gen.return_value = True
     return_val = tpt_reports.tpt_reports.generate_reports(
-        "test", "test", "cisa.gov", "./test_output", test_file
+        "test", "test", "cisa.gov", "./test_output", TEST_JSON_FILE
     )
     assert return_val is True, "generate_reports() failed to generate a report."
 
@@ -206,7 +173,7 @@ def test_generate_reports_bad_file_data(mock_report_gen):
     """Validate functionality of generate_reports() when a bad data is loaded from file."""
     mock_report_gen.return_value = False
     return_val = tpt_reports.tpt_reports.generate_reports(
-        "test", "test", "cisa.gov", "./test_output", bad_data
+        "test", "test", "cisa.gov", "./test_output", TEST_BAD_JSON_FILE
     )
     assert (
         return_val is False
