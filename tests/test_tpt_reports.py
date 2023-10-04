@@ -21,7 +21,6 @@ log_levels = (
     "critical",
 )
 test_file = "./tests/data/test.json"
-bad_file = "./tests/data/bad_file.json"
 bad_data = "./tests/data/bad_data.json"
 
 # define sources of version strings
