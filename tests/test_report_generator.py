@@ -66,13 +66,13 @@ def test_format_table(test_payloads_dataframe):
 
 
 def test_report_gen(test_dictionary):
-    """Validate an instance of MyDocTemplate is generated."""
+    """Validate that an instance of MyDocTemplate is generated."""
     output_file_path = (
         f"tests/data/TPT_Report_{datetime.today().strftime('%Y-%m-%d')}_test.pdf"
     )
     # Patch the MyDocTemplate class with a MagicMock
     with patch("tpt_reports.report_generator.MyDocTemplate") as MockMyDocTemplate:
-        # Create a MagicMock instance and set its filename attribute
+        # Create a MagicMock instance and set attributes
         mock_doc_instance = MockMyDocTemplate.return_value
         mock_doc_instance.filename = output_file_path
         mock_doc_instance.pagesize = letter
