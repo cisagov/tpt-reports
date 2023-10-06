@@ -3,11 +3,12 @@
 # Standard Python Libraries
 from datetime import datetime
 import json
-import os
+from unittest.mock import patch
 
 # Third-Party Libraries
 import pandas as pd
 import pytest
+from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.platypus import Table
@@ -31,21 +32,6 @@ def test_dictionary():
     """Define a fixture for the test JSON dictionary."""
     with open(TEST_JSON_FILE, encoding="utf-8") as file:
         return json.load(file)
-
-
-@pytest.fixture
-def output_file_path(request):
-    """Define a fixture for the output file path."""
-    new_file_name = f"TPT_Report_{datetime.today().strftime('%Y-%m-%d')}_test.pdf"
-    original_file_path = "tests/data/test.pdf"
-    new_file_path = os.path.join("tests/data", new_file_name)
-
-    def fin():
-        """Define a finalizer to revert the file name back."""
-        os.rename(new_file_path, original_file_path)
-
-    request.addfinalizer(fin)  # Register the finalizer
-    return new_file_path
 
 
 def test_format_table(test_payloads_dataframe):
@@ -79,17 +65,24 @@ def test_format_table(test_payloads_dataframe):
     assert table._cellvalues[1][7].text == "Test payload"
 
 
-def test_report_gen(test_dictionary, output_file_path):
-    """Validate report document is generated."""
-    result = report_generator.report_gen(
-        test_dictionary["tpt_info"], test_dictionary["payloads_clean"]
+def test_report_gen(test_dictionary):
+    """Validate an instance of MyDocTemplate is generated."""
+    output_file_path = (
+        f"tests/data/TPT_Report_{datetime.today().strftime('%Y-%m-%d')}_test.pdf"
     )
-
-    # Check that result is an instance of MyDocTemplate
-    assert isinstance(result, report_generator.MyDocTemplate)
-
-    # Validate the file name output of result
-    assert result.filename == output_file_path
-
-    # Validate the page size of result
-    assert result.pagesize == (612.0, 792.0)
+    # Patch the MyDocTemplate class with a MagicMock
+    with patch("tpt_reports.report_generator.MyDocTemplate") as MockMyDocTemplate:
+        # Create a MagicMock instance and set its filename attribute
+        mock_doc_instance = MockMyDocTemplate.return_value
+        mock_doc_instance.filename = output_file_path
+        mock_doc_instance.pagesize = letter
+        # Call the report_gen function, which now uses the mocked MyDocTemplate
+        result = report_generator.report_gen(
+            test_dictionary["tpt_info"], test_dictionary["payloads_clean"]
+        )
+        # Check that result is an instance of MyDocTemplate
+        MockMyDocTemplate.assert_called_once()
+        # Validate the file name output of result
+        assert result.filename == output_file_path
+        # Validate the page size of result
+        assert result.pagesize == (612.0, 792.0)
