@@ -107,8 +107,6 @@ def parse_json(data):
     return payloads_meta, payloads_list
 
 
-# Issue #22 - test generate_reports()
-# TODO: Add unit tests for following logic and remove this comment.
 def generate_reports(
     assessment_id, election_name, domain_tested, output_directory, json_file_path
 ):
