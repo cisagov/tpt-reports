@@ -4,6 +4,8 @@
 from datetime import datetime
 import json
 import os
+from unittest import TestCase
+from unittest.mock import patch
 
 # Third-Party Libraries
 import pandas as pd
@@ -93,3 +95,41 @@ def test_report_gen(test_dictionary, output_file_path):
 
     # Validate the page size of result
     assert result.pagesize == (612.0, 792.0)
+
+
+@patch("tpt_reports.report_generator.utils.ImageReader")
+@patch("tpt_reports.report_generator.Image")
+class TestGetImage(TestCase):
+    """Test get_image clase."""
+
+    def test_get_image_invalid_params(self, mock_image, mock_image_reader):
+        """Test that the get_image function raises an exception invalid args."""
+        # Setup test data
+        bad_path = 1
+        bad_width = "not a number"
+
+        # Assert that a TypeError is raised
+        with self.assertRaises(TypeError):
+            report_generator.get_image(path=bad_path, width=bad_width)
+
+    def test_get_image_returns_image(self, mock_image, mock_image_reader):
+        """Test that the get_image function returns an Image object."""
+        # Setup test data
+        path = "test_path"
+        width = 72.0
+
+        # Mock the getSize method of the ImageReader class (width, height)
+        mock_image_reader().getSize.return_value = (50, 100)
+
+        # Expected aspect value is 2.0 based on getSize (height / width)
+        # Set the expected height based on (getSize height * aspect value)
+        expected_height = 144.0
+
+        # Run the get_image function with test data
+        result = report_generator.get_image(path=path, width=width)
+
+        # Confirm Image() called with expected args and height calculated
+        mock_image.assert_called_once_with(path, width=width, height=expected_height)
+
+        # Confirm return value is an Image object
+        assert result == mock_image.return_value
