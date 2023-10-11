@@ -170,8 +170,6 @@ def format_table(df, header_style, column_widths, column_style_list):
     return table
 
 
-# Issue #26 - test report_gen()
-# TODO: Add unit tests for following logic and remove this comment.
 def report_gen(tpt_info, payloads_list):
     """Generate a TPT report with data passed in the data dictionary."""
 
