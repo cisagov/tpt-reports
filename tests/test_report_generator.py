@@ -95,7 +95,7 @@ class TestGetImage(TestCase):
     """Tests for the get_image function."""
 
     def test_get_image_invalid_params(self, mock_image, mock_image_reader):
-        """Test that the get_image function raises an exception invalid args."""
+        """Test that get_image raises an exception when given invalid arguments."""
         # Setup test data
         bad_path = 1
         bad_width = "not a number"
