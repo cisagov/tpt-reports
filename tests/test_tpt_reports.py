@@ -22,10 +22,11 @@ log_levels = (
 )
 
 # define sources of version strings
-RELEASE_TAG = os.getenv("RELEASE_TAG")
-PROJECT_VERSION = tpt_reports.__version__
-TEST_JSON_FILE = "tests/data/test.json"
 DEFAULT_OUTPUT_DIRECTORY = "~/"
+PROJECT_VERSION = tpt_reports.__version__
+RELEASE_TAG = os.getenv("RELEASE_TAG")
+TEST_BAD_JSON_FILE = "tests/data/bad_file.json"
+TEST_JSON_FILE = "tests/data/test.json"
 
 
 @patch("tpt_reports.tpt_reports.generate_reports")
@@ -141,6 +142,40 @@ def test_domain_validation(mock_generate_reports):
         except SystemExit as sys_exit:
             return_code = sys_exit.code
             assert return_code == 2, "main() should return with error return code 2"
+
+
+@patch("tpt_reports.tpt_reports.report_gen")
+def test_generate_reports(mock_report_gen):
+    """Validate functionality for generate_reports()."""
+    mock_report_gen.return_value = True
+    return_val = tpt_reports.tpt_reports.generate_reports(
+        "test", "test", "cisa.gov", "./test_output", TEST_JSON_FILE
+    )
+    assert return_val is True, "generate_reports() failed to generate a report."
+
+
+@patch("tpt_reports.tpt_reports.report_gen")
+def test_generate_reports_bad_file_name(mock_report_gen):
+    """Validate functionality of generate_reports() when a bad filename is provided."""
+    mock_report_gen.return_value = False
+    return_val = tpt_reports.tpt_reports.generate_reports(
+        "test", "test", "cisa.gov", "./test_output", "nonexistent_file.json"
+    )
+    assert (
+        return_val is False
+    ), "generate_reports() failed to return a boolean False when a non-existent filename was provided."
+
+
+@patch("tpt_reports.tpt_reports.report_gen")
+def test_generate_reports_bad_file_data(mock_report_gen):
+    """Validate functionality of generate_reports() when bad data is loaded from a file."""
+    mock_report_gen.return_value = False
+    return_val = tpt_reports.tpt_reports.generate_reports(
+        "test", "test", "cisa.gov", "./test_output", TEST_BAD_JSON_FILE
+    )
+    assert (
+        return_val is False
+    ), "generate_reports() failed to return a boolean False when malformed JSON data was provided."
 
 
 def test_load_json_file():
