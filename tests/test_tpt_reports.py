@@ -163,7 +163,7 @@ def test_generate_reports_bad_file_name(mock_report_gen):
     )
     assert (
         return_val is False
-    ), "generate_reports() returned a boolean True when a bad filename was provided."
+    ), "generate_reports() failed to return a boolean False when a non-existent filename was provided."
 
 
 @patch("tpt_reports.tpt_reports.report_gen")
