@@ -168,7 +168,7 @@ def test_generate_reports_bad_file_name(mock_report_gen):
 
 @patch("tpt_reports.tpt_reports.report_gen")
 def test_generate_reports_bad_file_data(mock_report_gen):
-    """Validate functionality of generate_reports() when a bad data is loaded from file."""
+    """Validate functionality of generate_reports() when bad data is loaded from a file."""
     mock_report_gen.return_value = False
     return_val = tpt_reports.tpt_reports.generate_reports(
         "test", "test", "cisa.gov", "./test_output", TEST_BAD_JSON_FILE
