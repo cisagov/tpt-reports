@@ -175,7 +175,7 @@ def test_generate_reports_bad_file_data(mock_report_gen):
     )
     assert (
         return_val is False
-    ), "generate_reports() returned a boolean True when a bad data was provided."
+    ), "generate_reports() failed to return a boolean False when malformed JSON data was provided."
 
 
 def test_load_json_file():
