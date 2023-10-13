@@ -22,11 +22,11 @@ log_levels = (
 )
 
 # define sources of version strings
-RELEASE_TAG = os.getenv("RELEASE_TAG")
-PROJECT_VERSION = tpt_reports.__version__
-TEST_JSON_FILE = "tests/data/test.json"
-TEST_BAD_JSON_FILE = "tests/data/bad_file.json"
 DEFAULT_OUTPUT_DIRECTORY = "~/"
+PROJECT_VERSION = tpt_reports.__version__
+RELEASE_TAG = os.getenv("RELEASE_TAG")
+TEST_BAD_JSON_FILE = "tests/data/bad_file.json"
+TEST_JSON_FILE = "tests/data/test.json"
 
 
 @patch("tpt_reports.tpt_reports.generate_reports")
