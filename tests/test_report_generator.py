@@ -92,7 +92,7 @@ def test_report_gen(test_dictionary):
 @patch("tpt_reports.report_generator.utils.ImageReader")
 @patch("tpt_reports.report_generator.Image")
 class TestGetImage(TestCase):
-    """Test get_image clase."""
+    """Tests for the get_image function."""
 
     def test_get_image_invalid_params(self, mock_image, mock_image_reader):
         """Test that the get_image function raises an exception invalid args."""
