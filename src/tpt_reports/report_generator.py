@@ -79,13 +79,24 @@ class ConditionalSpacer(Spacer):
         return (availWidth, height)
 
 
-# Issue #24 - test get_image()
-# TODO: Add unit tests for following logic and remove this comment.
 def get_image(path, width=1 * inch):
     """Read in an image and scale it based on the width argument."""
+    # Validate arguments
+    if not isinstance(path, str) or not isinstance(width, (int, float)):
+        # Raise TypeError if arguments are not the expected type
+        raise TypeError(
+            f"'get_image' expects path=(str) and width=(int/float). \
+            Got path={type(path)}, width={type(width)}."
+        )
+
+    # Read in image and get dimensions
     img = utils.ImageReader(path)
     img_width, img_height = img.getSize()
+
+    # Calculate aspect ratio
     aspect = img_height / float(img_width)
+
+    # Return an Image object with the calculated height
     return Image(path, width=width, height=(width * aspect))
 
 
