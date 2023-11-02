@@ -394,7 +394,7 @@ def report_gen(tpt_info, payloads_list):
             f"""The initial email containing a link to the malicious payloads was
             able to circumvent border protections and reach the complicit user's
             inbox (in spam). Of the {tpt_info["payloads_meta"]["num_payloads"]} different
-            payloads tested, {tpt_info["payloads_meta"]["payloads_not_blocked"]}
+            payloads tested, {tpt_info["payloads_meta"]["host_not_blocked"]}
             payloads executed and connected to the CISA team's
             command-and-control C2 server (Not Blocked).""",
             body,
