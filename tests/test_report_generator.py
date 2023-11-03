@@ -25,7 +25,7 @@ def test_payloads_dataframe():
     """Define a fixture for the payloads DataFrame."""
     with open(TEST_JSON_FILE, encoding="utf-8") as file:
         data = json.load(file)
-        return pd.DataFrame.from_dict(data["payloads"])
+        return pd.DataFrame.from_dict(data["phishing_assessment"]["payloads"])
 
 
 @pytest.fixture
