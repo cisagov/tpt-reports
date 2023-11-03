@@ -68,7 +68,6 @@ def parse_json(data):
         if data:
             assessment_id = data["id"]
             for payload in data["phishing_assessment"]["payloads"]:
-                print(payload)
                 num_payloads += 1
                 payload_data = {}
                 payload_data["Payload"] = payload["payload_description"]
@@ -102,7 +101,7 @@ def parse_json(data):
         payloads_meta["num_payloads"] = num_payloads
         payloads_meta["payloads_blocked"] = border_blocked + host_blocked
         payloads_meta["payloads_not_blocked"] = border_not_blocked + host_not_blocked
-        print(payload_data)
+
     except Exception as e:
         LOGGER.exception(str(e))
     return assessment_id, payloads_meta, payloads_list
