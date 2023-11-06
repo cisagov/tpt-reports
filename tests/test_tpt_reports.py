@@ -79,7 +79,6 @@ def test_log_levels(mock_generate_reports, level):
             "bogus",
             f"--log-level={level}",
             "test",
-            "test",
             "cisa.gov",
             TEST_JSON_FILE,
             "--output-dir=./test_output",
@@ -110,7 +109,7 @@ def test_bad_log_level(mock_generate_reports):
     with patch.object(
         sys,
         "argv",
-        ["bogus", "--log-level=emergency", "test", "test", "test", TEST_JSON_FILE],
+        ["bogus", "--log-level=emergency", "test", "test", TEST_JSON_FILE],
     ):
         return_code = None
         try:
@@ -130,7 +129,6 @@ def test_domain_validation(mock_generate_reports):
             "bogus",
             "--log-level=debug",
             "test",
-            "test",
             "cisa",
             TEST_JSON_FILE,
             "--output-dir=./test_output",
@@ -149,7 +147,7 @@ def test_generate_reports(mock_report_gen):
     """Validate functionality for generate_reports()."""
     mock_report_gen.return_value = True
     return_val = tpt_reports.tpt_reports.generate_reports(
-        "test", "test", "cisa.gov", "./test_output", TEST_JSON_FILE
+        "test", "cisa.gov", "./test_output", TEST_JSON_FILE
     )
     assert return_val is True, "generate_reports() failed to generate a report."
 
@@ -159,7 +157,7 @@ def test_generate_reports_bad_file_name(mock_report_gen):
     """Validate functionality of generate_reports() when a bad filename is provided."""
     mock_report_gen.return_value = False
     return_val = tpt_reports.tpt_reports.generate_reports(
-        "test", "test", "cisa.gov", "./test_output", "nonexistent_file.json"
+        "test", "cisa.gov", "./test_output", "nonexistent_file.json"
     )
     assert (
         return_val is False
@@ -171,7 +169,7 @@ def test_generate_reports_bad_file_data(mock_report_gen):
     """Validate functionality of generate_reports() when bad data is loaded from a file."""
     mock_report_gen.return_value = False
     return_val = tpt_reports.tpt_reports.generate_reports(
-        "test", "test", "cisa.gov", "./test_output", TEST_BAD_JSON_FILE
+        "test", "cisa.gov", "./test_output", TEST_BAD_JSON_FILE
     )
     assert (
         return_val is False
@@ -196,11 +194,13 @@ def test_parse_json():
             "C2 Protocol": "c2_1",
             "Host Protection": "Blocked",
             "Payload": "Test payload",
-        }
+        },
     ]
     data = tpt_reports.tpt_reports.load_json_file(TEST_JSON_FILE)
-    payloads_meta, payloads_list = tpt_reports.tpt_reports.parse_json(data)
-
+    assessment_id, payloads_meta, payloads_list = tpt_reports.tpt_reports.parse_json(
+        data
+    )
+    assert assessment_id == "RV####.##"
     assert payloads_list == payload_list_test
 
     assert payloads_meta["border_blocked"] == 0
@@ -220,7 +220,6 @@ def test_no_output_directory(mock_generate_reports):
         "--log-level=info",
         "test",
         "test",
-        "test",
         TEST_JSON_FILE,
     ]
 
@@ -235,7 +234,6 @@ def test_no_output_directory(mock_generate_reports):
 
         # Confirm generate_reports was called once with expected arguments
         expected_call_args = (
-            "test",
             "test",
             "test",
             DEFAULT_OUTPUT_DIRECTORY,
@@ -253,7 +251,6 @@ def test_with_output_directory(mock_generate_reports):
         "--log-level=info",
         "test",
         "test",
-        "test",
         TEST_JSON_FILE,
         "--output-dir=./",
     ]
@@ -268,6 +265,6 @@ def test_with_output_directory(mock_generate_reports):
         assert result is None
 
         # Confirm generate_reports was called with expected parameters
-        expected_call_args = ("test", "test", "test", "./", TEST_JSON_FILE)
+        expected_call_args = ("test", "test", "./", TEST_JSON_FILE)
         assert mock_generate_reports.call_count == 1
         assert mock_generate_reports.call_args[0] == expected_call_args

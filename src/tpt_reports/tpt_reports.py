@@ -1,7 +1,7 @@
 """cisagov/tpt-reports: A tool for creating Technical Phishing Test (TPT) reports.
 
 Usage:
-  tpt-reports ASSESSMENT_ID ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH [--log-level=LEVEL] [--output-dir=OUTPUT_DIRECTORY]
+  tpt-reports ELECTION_NAME DOMAIN_TESTED JSON_FILE_PATH [--log-level=LEVEL] [--output-dir=OUTPUT_DIRECTORY]
 
 Options:
   -h --help                         Show this message.
@@ -12,7 +12,6 @@ Options:
                                     should be saved. [default: ~/]
 
 Arguments:
-  ASSESSMENT_ID                     The assessment identifier.
   ELECTION_NAME                     The name of the election being reported on.
   DOMAIN_TESTED                     The email domain used in the testing.
   JSON_FILE_PATH                    Path to the JSON file to act as a data source.
@@ -67,12 +66,12 @@ def parse_json(data):
     payloads_meta = {}
     try:
         if data:
-            for payload in data["payloads"]:
+            assessment_id = data.get("id", "N/A")
+            for payload in data["phishing_assessment"]["payloads"]:
                 num_payloads += 1
                 payload_data = {}
                 payload_data["Payload"] = payload["payload_description"]
-                # c2_protocol requires additional space to match input file format
-                payload_data["C2 Protocol"] = payload["c2_protocol "]
+                payload_data["C2 Protocol"] = payload["c2_protocol"]
 
                 if payload["border_protection"] == "N":
                     payload_data["Border Protection"] = "Not Blocked"
@@ -104,27 +103,25 @@ def parse_json(data):
 
     except Exception as e:
         LOGGER.exception(str(e))
-    return payloads_meta, payloads_list
+    return assessment_id, payloads_meta, payloads_list
 
 
-def generate_reports(
-    assessment_id, election_name, domain_tested, output_directory, json_file_path
-):
+def generate_reports(election_name, domain_tested, output_directory, json_file_path):
     """Process steps for generating report data."""
     tpt_info = {}
     tpt_info["domain_tested"] = domain_tested
     tpt_info["election_name"] = election_name
     tpt_info["output_directory"] = output_directory
-    tpt_info["assessment_id"] = assessment_id
 
     data = load_json_file(json_file_path)
     report_status = False
     if data:
-        tpt_info["payloads_meta"], payloads_list = parse_json(data)
+        assessment_id, tpt_info["payloads_meta"], payloads_list = parse_json(data)
         if (
             bool(tpt_info["payloads_meta"]) is not False
             and bool(payloads_list) is not False
         ):
+            tpt_info["assessment_id"] = assessment_id
             logging.debug(tpt_info)
             logging.debug(payloads_list)
             report_gen(tpt_info, payloads_list)
@@ -147,7 +144,6 @@ def main() -> None:
                 + "debug, info, warning, error, and critical.",
             ),
             "--output-dir": Use(str, error="--output-dir must be a string."),
-            "ASSESSMENT_ID": Use(str, error="ASSESSMENT_ID must be a string."),
             # Issue #36 - Validate DOMAIN_TESTED argument inputs
             # TODO: Provide input validation for DOMAIN_TESTED.
             "DOMAIN_TESTED": Use(str, error="DOMAIN_TESTED must be a string."),
@@ -170,7 +166,6 @@ def main() -> None:
         sys.exit(2)
 
     # Assign validated arguments to variables
-    assessment_id: str = validated_args["ASSESSMENT_ID"]
     domain_tested: str = validated_args["DOMAIN_TESTED"]
     election_name: str = validated_args["ELECTION_NAME"]
     json_file_path: str = validated_args["JSON_FILE_PATH"]
@@ -192,12 +187,11 @@ def main() -> None:
     if not os.path.exists(output_directory):
         os.mkdir(output_directory)
 
-    if generate_reports(
-        assessment_id, election_name, domain_tested, output_directory, json_file_path
-    ):
+    if generate_reports(election_name, domain_tested, output_directory, json_file_path):
         LOGGER.info(
-            "TPT report %s was generated successfully in %s.",
-            assessment_id,
+            "TPT report for %s - %s was generated successfully in %s.",
+            election_name,
+            domain_tested,
             output_directory,
         )
 
