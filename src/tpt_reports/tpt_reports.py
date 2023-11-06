@@ -66,7 +66,7 @@ def parse_json(data):
     payloads_meta = {}
     try:
         if data:
-            assessment_id = data["id"]
+            assessment_id = data.get("id", "N/A")
             for payload in data["phishing_assessment"]["payloads"]:
                 num_payloads += 1
                 payload_data = {}
