@@ -290,6 +290,12 @@ def report_gen(tpt_info, payloads_list):
         fontName="Franklin_Gothic_Book",
         fontSize=12,
     )
+    body_sm = paragraph_style(
+        name="body",
+        leading=14,
+        fontName="Franklin_Gothic_Book",
+        fontSize=9,
+    )
     table = paragraph_style(
         name="table",
         fontName="Franklin_Gothic_Medium_Regular",
@@ -306,6 +312,9 @@ def report_gen(tpt_info, payloads_list):
         spaceAfter=30,
         textColor=HexColor("#FFFFFF"),
     )
+    # Update font size for long names
+    asmtName_body = body if len(tpt_info["election_name"]) < 15 else body_sm
+    domain_body = body if len(tpt_info["domain_tested"]) < 15 else body_sm
 
     # Create dynamic content; repeated and random elements used in the report
     point12_spacer = ConditionalSpacer(1, 12)
@@ -336,8 +345,8 @@ def report_gen(tpt_info, payloads_list):
                 }
             ),
             table_header,
-            [1.2 * inch, 2.2 * inch, 1.6 * inch, 1.3 * inch],
-            [None, body, body, body],
+            [1.2 * inch, 1.8 * inch, 2 * inch, 1.3 * inch],
+            [body, asmtName_body, domain_body, body],
         )
     )
     Story.append(point30_spacer)
@@ -353,7 +362,7 @@ def report_gen(tpt_info, payloads_list):
             ),
             table_header,
             [5 * inch, 1.3 * inch],
-            [body, None],
+            [body, body],
         )
     )
     Story.append(point30_spacer)
@@ -408,7 +417,7 @@ def report_gen(tpt_info, payloads_list):
             pd.DataFrame.from_records(payloads_list),
             table_header,
             [3.2 * inch, 0.9 * inch, 1.1 * inch, 1.1 * inch],
-            [body, None, None, None],
+            [body, body, None, None],
         )
     )
     Story.append(Paragraph("Figure 2: Payload testing results", image_text))
