@@ -15,8 +15,25 @@ The package collects raw data and creates an encrypted PDF.
 
 ## Installation ##
 
-- `git clone https://github.com/cisagov/tpt-reports.git`
-- `./setup-env`
+- These are the one time set up commands.
+
+```console
+git clone https://github.com/cisagov/tpt-reports.git
+cd tpt-reports
+./setup-env
+pip install -e .
+```
+
+- Retrieve periodic project updates with these commands.
+
+```console
+git pull
+pip install -e .
+```
+
+## Running the Project ##
+
+- The output of the command `tpt-reports -h` provides usage details.
 
 ```console
 Usage:
@@ -34,6 +51,12 @@ Arguments:
   ELECTION_NAME                     The name of the election being reported on.
   DOMAIN_TESTED                     The email domain used in the testing.
   JSON_FILE_PATH                    Path to the JSON file to act as a data source.
+```
+
+- Below is a sample command to create a report.
+
+```console
+tpt-reports "ABC Organization" domain.gov /filepath/data.json --output-dir=reports
 ```
 
 ## Contributing ##
