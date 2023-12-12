@@ -413,23 +413,31 @@ def report_gen(tpt_info, payloads_list):
 
     # Generate a table using a tabframe passed to my format_table function
     Story.append(
-        format_table(
-            pd.DataFrame.from_records(payloads_list),
-            table_header,
-            [3.2 * inch, 0.9 * inch, 1.1 * inch, 1.1 * inch],
-            [body, body, None, None],
+        KeepTogether(
+            [
+                format_table(
+                    pd.DataFrame.from_records(payloads_list),
+                    table_header,
+                    [3.2 * inch, 0.9 * inch, 1.1 * inch, 1.1 * inch],
+                    [body, body, None, None],
+                ),
+                Paragraph("Figure 2: Payload testing results", image_text),
+            ]
         )
     )
-    Story.append(Paragraph("Figure 2: Payload testing results", image_text))
     Story.append(point12_spacer)
-    Story.append(Paragraph("CONCLUSION / RECOMMENDED MITIGATION", h2))
     Story.append(
-        Paragraph(
-            """Regularly analyze border and host-level protections, including
-            spam-filtering capabilities, to ensure their continued effectiveness
-            in blocking the delivery and execution of malware. These tools must
-            be kept up-to-date.""",
-            body,
+        KeepTogether(
+            [
+                Paragraph("CONCLUSION / RECOMMENDED MITIGATION", h2),
+                Paragraph(
+                    """Regularly analyze border and host-level protections, including
+                spam-filtering capabilities, to ensure their continued effectiveness
+                in blocking the delivery and execution of malware. These tools must
+                be kept up-to-date.""",
+                    body,
+                ),
+            ]
         )
     )
 
