@@ -68,6 +68,19 @@ def test_release_version():
     ), "RELEASE_TAG does not match the project version"
 
 
+def test_parse_json_non_dict():
+    """Validate parse_json() returns cleanly when the JSON is not an object."""
+    # A JSON file whose top-level value is an array (or any non-object) is
+    # truthy, so generate_reports() passes it through to parse_json(). The
+    # lookups inside then fail, and parse_json() should log the problem and
+    # return defaults rather than raising.
+    assessment_id, payloads_meta, payloads_list = tpt_reports.tpt_reports.parse_json(
+        [1, 2, 3]
+    )
+    assert assessment_id == "N/A"
+    assert payloads_list == []
+
+
 @pytest.mark.parametrize("level", log_levels)
 @patch("tpt_reports.tpt_reports.generate_reports")
 def test_log_levels(mock_generate_reports, level):

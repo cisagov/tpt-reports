@@ -57,6 +57,7 @@ def load_json_file(file_path):
 # TODO: Add unit tests for following logic and remove this comment.
 def parse_json(data):
     """Parse JSON object for values to report."""
+    assessment_id = "N/A"
     border_blocked = 0
     border_not_blocked = 0
     host_blocked = 0
